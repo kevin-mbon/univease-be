@@ -8,10 +8,11 @@ const applicantSchema = new mongoose.Schema({
             enum: ['female','male','other']
         },
         email: {type: String, required: true},
-        password: { type:String, required: true}
-    },
+        password: { type:String, required: true},
+        confirmPassword: { type:String, required: true} 
+      },
 
-    educationalBackground: {
+     educationalBackground: {
         highSchoolOrUniversity: {
             type: String
         },
@@ -21,8 +22,8 @@ const applicantSchema = new mongoose.Schema({
         gpaOrGrades: {
             type: Number
         }
-    },
-    workExperience: {
+     },
+     workExperience: {
         relevantExperience: {
             type: String
         }
@@ -73,4 +74,4 @@ const applicantSchema = new mongoose.Schema({
 
 const Applicant = mongoose.model('Applicant', applicantSchema);
 
-module.exports = Applicant;
+export default Applicant;

@@ -1,4 +1,4 @@
-import mongoose from('mongoose');
+import mongoose from 'mongoose';
 
 const universitySchema = new mongoose.Schema({
     universityName: {
@@ -16,13 +16,13 @@ const universitySchema = new mongoose.Schema({
             type: String
         },
         emailAddress: {
-            type: String
+            type: String,
         }
     },
     websiteURL: {
         type: String
     },
-    typeOfInstitution: {
+    universityType: {
         type: String,
         required: true
     },
@@ -60,10 +60,13 @@ const universitySchema = new mongoose.Schema({
         type: Boolean
     },
     username: {
+        type: String
+    },
+    password: {
         type: String,
         required: true
     },
-    password: {
+    confirmPassword: {
         type: String,
         required: true
     },
@@ -79,4 +82,4 @@ const universitySchema = new mongoose.Schema({
 
 const University = mongoose.model('University', universitySchema);
 
-module.exports = University;
+export default University;
