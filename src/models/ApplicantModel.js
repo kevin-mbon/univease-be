@@ -2,7 +2,8 @@ import mongoose from 'mongoose';
 
 const applicantSchema = new mongoose.Schema({
     personalInformation: {
-        fullName: { type: String, required: true },
+        firstName: { type: String, required: true },
+        secondName: { type: String, required: true },
         dateOfBirth: { type: Date},
         gender: { type: String,
             enum: ['female','male','other']
