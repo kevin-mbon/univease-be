@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const applicantSchema = new mongoose.Schema({
-    personalInformation: {
+
         firstName: { type: String, required: true },
         secondName: { type: String, required: true },
         dateOfBirth: { type: Date},
@@ -10,8 +10,8 @@ const applicantSchema = new mongoose.Schema({
         },
         email: {type: String, required: true},
         password: { type:String, required: true},
-        confirmPassword: { type:String, required: true} 
-      },
+        confirmPassword: { type:String, required: true} ,
+  
 
      educationalBackground: {
         highSchoolOrUniversity: {

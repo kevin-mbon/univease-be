@@ -16,3 +16,4 @@ const adminSchema = new mongoose.Schema({
     });
 
 const Applicant = mongoose.model('Admin', adminSchema);
+export default Applicant;

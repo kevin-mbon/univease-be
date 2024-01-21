@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import { validationResult } from 'express-validator';
-import Applicant from "../models/ApplicantModel";
+import Applicant from '../models/ApplicantModel.js'
 
-// Controller to register a university
+// Controller to register USER  
 export const registerApplicant = async (req, res) => {
   const {
     firstName,
@@ -30,11 +30,11 @@ if (password !== confirmPassword) {
     return res.status(400).json({ message: "Passwords do not match" });
 }
 
-try {
-} catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Your registeration failed", error });
-}
+// try {
+// } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: "Your registeration failed", error });
+// }
 
   try {
     const existingApplicant = await Applicant.findOne({ email });
@@ -57,10 +57,11 @@ try {
 
     res.status(200).json({
       message: "Applicant registered successfully",
-      university,
+      applicant,
       token,
     });
-  } catch (error) {
+  } 
+  catch (error) {
     console.log(error);
     res.status(500).json({ message: "Your registeration failed", error });
   }

@@ -59,6 +59,44 @@ const options = {
         },
       },
     },
+
+    "/api/v1/user/register": {
+      post: {
+        tags: ["User Applicant"],
+        description: "Applicant register",
+        security: [],
+        parameters: [],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                $ref: '#/components/schemas/University',
+              },
+              example: {
+                firstName: "Amani",
+                secondName: "Kalisa",
+                email: "kalisa@gmail.com",
+                password: "1234qw",
+                confirmPassword: "1234qw",
+              },
+            },
+          },
+          required: true,
+        },
+        responses: {
+          201: {
+            description: "New User was created successfully",
+          },
+          400: {
+            description: "Bad Request",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+
   },
   components: {
     schemas: {

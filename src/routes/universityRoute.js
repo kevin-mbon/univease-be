@@ -5,20 +5,20 @@ import { body } from 'express-validator';
 
 const univRouter = express.Router();
 
-// const registrationValidationRules = [
-//     body('name').trim().not().isEmpty().withMessage('University name is required.'),
-//     body('email').trim().isEmail().withMessage('Invalid email address.'),
-//     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long.'),
-//     body('confirmPassword').custom((value, { req }) => {
-//         if (value !== req.body.password) {
-//             throw new Error('Passwords do not match.');
-//         }
-//         return true;
-//     }),
-//     body('type').trim().isIn(['private', 'public', 'semiPublic']).withMessage('Invalid type of university.'),
-// ];
+const registrationValidationRules = [
+    body('universityName').trim().not().isEmpty().withMessage('University name is required.'),
+    body('email').trim().isEmail().withMessage('Invalid email address.'),
+    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long.'),
+    body('confirmPassword').custom((value, { req }) => {
+        if (value !== req.body.password) {
+            throw new Error('Passwords do not match.');
+        }
+        return true;    
+    }),
+    body('universityType').trim().isIn(['private', 'public', 'semiPublic']).withMessage('Invalid type of university.'),
+];
 
-univRouter.post('/register', registerUniversity);
+univRouter.post('/register',registrationValidationRules, registerUniversity);
 
 // userRouter.get('/', authMiddleware, getAllUsers);
 
