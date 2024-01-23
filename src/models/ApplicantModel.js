@@ -5,12 +5,14 @@ const applicantSchema = new mongoose.Schema({
         firstName: { type: String, required: true },
         secondName: { type: String, required: true },
         dateOfBirth: { type: Date},
+        country: { type: String, required: true},
+        city: { type: String, required: true},
+        phoneNumber: { type: Number, required: true},
         gender: { type: String,
             enum: ['female','male','other']
         },
         email: {type: String, required: true},
-        password: { type:String, required: true},
-        confirmPassword: { type:String, required: true} ,
+        password: { type:String,required: true},
   
 
      educationalBackground: {

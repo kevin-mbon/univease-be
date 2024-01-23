@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { validationResult } from 'express-validator';
+import { validationResult } from "express-validator";
 import University from "../models/UniversityModel.js";
 
 // Controller to register a university
@@ -8,7 +8,9 @@ export const registerUniversity = async (req, res) => {
     universityName,
     email,
     universityType,
-    description,
+    country,
+    city,
+    phoneNumber,
     password,
     confirmPassword,
   } = req.body;
@@ -17,26 +19,28 @@ export const registerUniversity = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
 
-if (
+  if (
     !universityName ||
     !email ||
     !universityType ||
-    !description ||
+    !country ||
+    !city ||
+    !phoneNumber ||
     !password ||
     !confirmPassword
-) {
+  ) {
     return res.status(400).json({ message: "All fields are required" });
-} 
+  }
 
-if (password !== confirmPassword) {
+  if (password !== confirmPassword) {
     return res.status(400).json({ message: "Passwords do not match" });
-}
+  }
 
-try {
-} catch (error) {
+  try {
+  } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Failed to register university", error });
-}
+  }
 
   try {
     const existingUniversity = await University.findOne({ email });
@@ -45,18 +49,20 @@ try {
     }
 
     let university = new University({
-        universityName,
-        email,
-        description,
-        password,
-        confirmPassword,
-        universityType, 
-      });
-      
+      universityName,
+      email,
+      country,
+      city,
+      phoneNumber,
+      password,
+      confirmPassword,
+      universityType,
+    });
+
     await university.save();
 
     // Generate a token for the registered university
-    const token = jwt.sign({ university }, "secretKey");
+    const token = jwt.sign({ university }, process.env.SECRET_KEY);
 
     res.status(200).json({
       message: "University registered successfully",
@@ -68,3 +74,114 @@ try {
     res.status(500).json({ message: "Failed to register university", error });
   }
 };
+
+// Controller to login a university
+export const loginUniversity = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    const existingUniversity = await University.findOne({ email });
+    if (!existingUniversity) {
+      return res.status(400).json({ message: "University does not exist" });
+    }
+
+    if (password !== existingUniversity.password) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    // Generate a token for the registered university
+    const token = jwt.sign({ existingUniversity }, process.env.SECRET_KEY);
+
+    res.status(200).json({
+      message: "University logged in successfully",
+      existingUniversity,
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Failed to login university", error });
+  }
+};
+
+// Controller to get all universities
+export const getAllUniversities = async (req, res) => {
+  try {
+    const universities = await University.find();
+    res.status(200).json({ success: true, data: universities });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Failed to get universities", error });
+  }
+};
+
+// Controller to get a university by id
+export const getUniversityById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const university = await University.findById(id);
+    res.status(200).json({ success: true, data: university });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Failed to get university", error });
+  }
+};
+
+// Controller to update a university
+export const updateUniversity = async (req, res) => {
+  const { id } = req.params;
+  const {
+    universityName,
+    email,
+    universityType,
+    country,
+    city,
+    phoneNumber,
+    password,
+    confirmPassword,
+  } = req.body;
+  try {
+    const university = await University.findById(id);
+    if (!university) {
+      return res.status(400).json({ message: "University does not exist" });
+    }
+
+    university.universityName = universityName;
+    university.email = email;
+    university.universityType = universityType;
+    university.country = country;
+    university.city = city;
+    university.phoneNumber = phoneNumber;
+    university.password = password;
+    university.confirmPassword = confirmPassword;
+
+    await university.save();
+
+    res.status(200).json({ message: "University updated successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Failed to update university", error });
+  }
+};
+
+// Controller to delete a university
+export const deleteUniversity = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const university = await University.findById(id);
+    if (!university) {
+      return res.status(400).json({ message: "University does not exist" });
+    }
+
+    await university.remove();
+
+    res.status(200).json({ message: "University deleted successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Failed to delete university", error });
+  }
+};
+

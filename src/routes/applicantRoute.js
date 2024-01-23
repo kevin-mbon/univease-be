@@ -1,7 +1,9 @@
 import express from 'express';
-import { registerApplicant } from '../controller/applicantController.js';
+import { registerApplicant,getAllApplicant,updateApplicant } from '../controller/applicantController.js';
 import { body } from 'express-validator';
 // import { authMiddleware } from '../middleware/authMiddleware.js';
+
+
 
 const applicantRouter = express.Router();
 
@@ -19,6 +21,8 @@ const registrationValidationRules = [
 ];
 
 applicantRouter.post('/register',registrationValidationRules, registerApplicant);
+applicantRouter.get('/', getAllApplicant);
+applicantRouter.put('/update/:id',updateApplicant);
 
 // userRouter.get('/', authMiddleware, getAllUsers);
 

@@ -3,7 +3,7 @@ import { serve, setup } from "swagger-ui-express";
 
 const docrouter = express.Router();
 
-const local = process.env.LOCAL_HOST || "http://localhost:8080";
+const local = process.env.LOCAL_HOST;
 
 
 const options = {
@@ -37,8 +37,10 @@ const options = {
               example: {
                 universityName: "kepls",
                 email: "kepla@gmail.com",
+                country: "Rwanda",
+                city: "Kigali",
+                phoneNumber: "0780000000",
                 universityType: "public",
-                description: "wqudbqudbkqwbyqweycbqwab",
                 password: "1234qw",
                 confirmPassword: "1234qw",
               },
