@@ -6,8 +6,33 @@ import bcrypt from "bcrypt";
 // Controller to register USER
 export const registerApplicant = async (req, res) => {
   try {
-    const { firstName, secondName, email, password, confirmPassword } =
-      req.body;
+    const {
+      firstName,
+      secondName,
+      email,
+      password,
+      confirmPassword,
+      gender,
+      dateOfBirth,
+      educationalBackground,
+      workExperience,
+      lettersOfRecommendation,
+      personalStatement,
+      resume,
+      portfolio,
+      languageProficiency,
+      financialInformation,
+      preferredStartDate,
+      applicationFeePayment,
+      securityMeasures,
+      termsAndConditions,
+    } = req.body;
+
+    const { highSchoolOrUniversity, graduationYear, gpaOrGrades } =   educationalBackground;
+    const { englishProficiencyTest } = languageProficiency;
+    const { twoFactorAuthentication } = securityMeasures;
+    const { uploadOption, contactInformation } = lettersOfRecommendation;
+    const { relevantExperience } = workExperience;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -38,6 +63,33 @@ export const registerApplicant = async (req, res) => {
       email,
       password: hashedPass,
       confirmPassword: hashedPass,
+      gender,
+      dateOfBirth,
+      educationalBackground: {
+        highSchoolOrUniversity,
+        graduationYear,
+        gpaOrGrades,
+      },
+      workExperience: {
+        relevantExperience,
+      },
+      lettersOfRecommendation: {
+        uploadOption,
+        contactInformation,
+      },
+      personalStatement,
+      resume,
+      portfolio,
+      languageProficiency: {
+        englishProficiencyTest,
+      },
+      financialInformation,
+      preferredStartDate,
+      applicationFeePayment,
+      securityMeasures: {
+        twoFactorAuthentication,
+      },
+      termsAndConditions,
     });
 
     // Generate a token for the registered university
