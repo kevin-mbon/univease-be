@@ -3,8 +3,13 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import router from "./routes/index.js";
 import dbConnector from "./app.js";
+<<<<<<< HEAD
 import morgan from "morgan";
 import cors from "cors";
+=======
+import cors from "cors"
+dotenv.config();
+>>>>>>> 4b8ecdc (cleaning code)
 
 const app = express();
 dotenv.config();
@@ -13,8 +18,13 @@ dotenv.config();
 app.use(cors());
 app.use(morgan("dev"));
 app.use(bodyParser.json());
+<<<<<<< HEAD
 app.use(bodyParser.urlencoded({ extended: false }));
 
+=======
+app.use(express.json());
+app.use(cors());
+>>>>>>> 4b8ecdc (cleaning code)
 // Routes
 app.use("/api/v1/", router);
 dbConnector;    
