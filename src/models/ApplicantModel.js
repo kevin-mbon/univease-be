@@ -1,78 +1,75 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const applicantSchema = new mongoose.Schema({
+  firstName: { type: String, required: true },
+  secondName: { type: String, required: true },
+  dateOfBirth: { type: Date },
+  profile: { type: String },
+  gender: { type: String, enum: ["female", "male", "other"] },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+  confirmPassword: { type: String, required: true },
 
-        firstName: { type: String, required: true },
-        secondName: { type: String, required: true },
-        dateOfBirth: { type: Date},
-        gender: { type: String,
-            enum: ['female','male','other']
-        },
-        email: {type: String, required: true},
-        password: { type:String, required: true},
-        confirmPassword: { type:String, required: true} ,
-  
-
-     educationalBackground: {
-        highSchoolOrUniversity: {
-            type: String
-        },
-        graduationYear: {
-            type: Number
-        },
-        gpaOrGrades: {
-            type: Number
-        }
-     },
-     workExperience: {
-        relevantExperience: {
-            type: String
-        }
+  educationalBackground: {
+    highSchoolOrUniversity: {
+      type: String,
     },
-    lettersOfRecommendation: {
-        uploadOption: {
-            type: Boolean,
-            default: false
-        },
-        contactInformation: {
-            type: String
-        }
+    graduationYear: {
+      type: Number,
     },
-    personalStatement: {
-        type: String
+    gpaOrGrades: {
+      type: Number,
     },
-    resume: {
-        type: String
+  },
+  workExperience: {
+    relevantExperience: {
+      type: String,
     },
-    portfolio: {
-        type: String
+  },
+  lettersOfRecommendation: {
+    uploadOption: {
+      type: Boolean,
+      default: false,
     },
-    languageProficiency: {
-        englishProficiencyTest: {
-            type: String
-        }
+    contactInformation: {
+      type: String,
     },
-    financialInformation: {
-        type: String
+  },
+  personalStatement: {
+    type: String,
+  },
+  resume: {
+    type: String,
+  },
+  portfolio: {
+    type: String,
+  },
+  languageProficiency: {
+    englishProficiencyTest: {
+      type: String,
     },
-    preferredStartDate: {
-        type: String
+  },
+  financialInformation: {
+    type: String,
+  },
+  preferredStartDate: {
+    type: String,
+  },
+  applicationFeePayment: {
+    type: Boolean,
+    default: false,
+  },
+  securityMeasures: {
+    twoFactorAuthentication: {
+      type: Boolean,
+      default: false,
     },
-    applicationFeePayment: {
-        type: Boolean,
-        default: false
-    },
-    securityMeasures: {
-        twoFactorAuthentication: {
-            type: Boolean,
-            default: false
-        }
-    },
-    termsAndConditions: {
-        type: Boolean
-    }
+  },
+  termsAndConditions: {
+    type: Boolean,
+  },
 });
 
-const Applicant = mongoose.model('Applicant', applicantSchema);
+const Applicant = mongoose.model("Applicant", applicantSchema);
 
 export default Applicant;

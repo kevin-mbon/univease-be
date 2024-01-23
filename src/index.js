@@ -3,16 +3,31 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import router from "./routes/index.js";
 import dbConnector from "./app.js";
-dotenv.config();
+import morgan from "morgan";
+import cors from "cors";
 
 const app = express();
-const port = process.env.PORT || 5000;
-   
+dotenv.config();
+
+// Configurations
+app.use(cors());
+app.use(morgan("dev"));
 app.use(bodyParser.json());
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 // Routes
 app.use("/api/v1/", router);
 dbConnector;    
-app.listen(port, () => {
-  console.log(`🚀Server is running on port ${port}...`);
+const PORT = process.env.PORT || 4200;
+
+app.listen(process.env.PORT, () => {
+  console.log(`🚀Server running on port: http://localhost:${PORT}`);
+});
+
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "success",
+    author: "Kevin && theyCallMeDeSaint",
+    message: "Welcome to the UnivEase API!",
+  });
 });
