@@ -153,7 +153,7 @@ export const deleteApplicant = async (req, res) => {
           return res.status(404).json({ message: "Applicant not found" });
       }
 
-      await applicant.remove();
+      await applicant.deleteOne();
       res.status(200).json({ message: "Applicant deleted successfully" });
   } catch (error) {
       console.log(error);

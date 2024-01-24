@@ -5,7 +5,7 @@ import { uploadToCloud } from "../helper/cloudinary.js";
 import bcrypt from "bcrypt";
 // Controller to register a university
 export const registerUniversity = async (req, res) => {
-<<<<<<< HEAD
+
   try {
     const {
       universityName,
@@ -27,11 +27,6 @@ export const registerUniversity = async (req, res) => {
       verificationProcess,
     } = req.body;
 
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
     if (
       !universityName ||
       !universityType ||
@@ -46,17 +41,6 @@ export const registerUniversity = async (req, res) => {
       return res.status(400).json({ message: "Passwords do not match" });
     }
 
-=======
-  const {
-    universityName,
-    email,
-    universityType,
-    country,
-    city,
-    phoneNumber,
-    password,
-    confirmPassword,
-  } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -78,13 +62,6 @@ export const registerUniversity = async (req, res) => {
   if (password !== confirmPassword) {
     return res.status(400).json({ message: "Passwords do not match" });
   }
-
-  try {
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Failed to register university", error });
-  }
->>>>>>> 4b8ecdc (cleaning code)
 
     const { address, phoneNumber, emailAddress } = contactInformation;
 
@@ -108,29 +85,6 @@ export const registerUniversity = async (req, res) => {
     const existingUniversity = await University.findOne({
       universityName,
     });
-
-    if (existingUniversity) {
-      return res.status(400).json({ message: "University already exists" });
-    }
-
-<<<<<<< HEAD
-    const existingEmail = await University.findOne({
-      "contactInformation.emailAddress": emailAddress,
-    });
-=======
-    let university = new University({
-      universityName,
-      email,
-      country,
-      city,
-      phoneNumber,
-      password,
-      confirmPassword,
-      universityType,
-    });
-
-    await university.save();
->>>>>>> 4b8ecdc (cleaning code)
 
     if (existingEmail) {
       return res.status(400).json({ message: "Email already exists" });
@@ -180,38 +134,6 @@ export const registerUniversity = async (req, res) => {
       message: "Failed to register university",
       error: error.message,
     });
-  }
-};
-
-// Controller to login a university
-export const loginUniversity = async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    res.status(400).json({ message: "All fields are required" });
-  }
-
-  try {
-    const existingUniversity = await University.findOne({ email });
-    if (!existingUniversity) {
-      return res.status(400).json({ message: "University does not exist" });
-    }
-
-    if (password !== existingUniversity.password) {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    // Generate a token for the registered university
-    const token = jwt.sign({ existingUniversity }, process.env.SECRET_KEY);
-
-    res.status(200).json({
-      message: "University logged in successfully",
-      existingUniversity,
-      token,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Failed to login university", error });
   }
 };
 

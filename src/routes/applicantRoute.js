@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-import express from "express";
-import { registerApplicant } from "../controller/applicantController.js";
-import { body } from "express-validator";
-import fileUpload from "../helper/multer.js";
-=======
 import express from 'express';
-import { registerApplicant,getAllApplicant,updateApplicant } from '../controller/applicantController.js';
+import { loginApplicant } from '../controller/authController.js';
+import { registerApplicant,getAllApplicant,updateApplicant,deleteApplicant } from '../controller/applicantController.js';
 import { body } from 'express-validator';
->>>>>>> 4b8ecdc (cleaning code)
+import fileUpload from "../helper/multer.js";
 // import { authMiddleware } from '../middleware/authMiddleware.js';
 
 
@@ -37,18 +32,10 @@ const registrationValidationRules = [
   }),
 ];
 
-<<<<<<< HEAD
-applicantRouter.post(
-  "/register",
-  fileUpload.single("profile"),
-  registrationValidationRules,
-  registerApplicant
-);
-=======
+
 applicantRouter.post('/register',registrationValidationRules, registerApplicant);
 applicantRouter.get('/', getAllApplicant);
 applicantRouter.put('/update/:id',updateApplicant);
->>>>>>> 4b8ecdc (cleaning code)
 
 // userRouter.get('/', authMiddleware, getAllUsers);
 
