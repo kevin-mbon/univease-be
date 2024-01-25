@@ -70,7 +70,7 @@ export const getSinglePost = async (req, res) => {
     if (findPost) {
       return res.status(200).json({
         status: "200",
-        message: "All Post Retrived Well",
+        message: "Post Retrived Well",
         data: findPost,
       });
     } else {
