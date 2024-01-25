@@ -28,7 +28,8 @@ export const registerApplicant = async (req, res) => {
       termsAndConditions,
     } = req.body;
 
-    const { highSchoolOrUniversity, graduationYear, gpaOrGrades } =   educationalBackground;
+    const { highSchoolOrUniversity, graduationYear, gpaOrGrades } =
+      educationalBackground;
     const { englishProficiencyTest } = languageProficiency;
     const { twoFactorAuthentication } = securityMeasures;
     const { uploadOption, contactInformation } = lettersOfRecommendation;
@@ -106,5 +107,77 @@ export const registerApplicant = async (req, res) => {
       error: error.message,
     });
   }
+
 }
+};
+
+// export const getAll Applicant
+
+export const getApplicant = async (req, res) => {
+  try {
+    const getAll = await Applicant.find();
+    if (getAll) {
+      return res.status(200).json({
+        message: "All Applicant Retrived Successfull",
+        data: getAll,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      status: "500",
+      message: "Failed to Get All Applicant",
+      error: error.message,
+    });
+  }
+};
+// single Applicant
+export const getOneApplicant = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getOne = await Applicant.findById(id);
+    if (getOne) {
+      return res.status(200).json({
+        message: "Applicant Retrived Successfull",
+        data: getOne,
+      });
+    } else {
+      return res
+        .status(404)
+        .json({ status: "404", message: "Applicant Not Found" });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      status: "500",
+      message: "Failed to Get Applicant",
+      error: error.message,
+    });
+  }
+};
+// delete Applicant
+export const deleteApplicant = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getOne = await Applicant.findById(id);
+    if (!getOne) {
+      return res.status(404).json({
+        message: "Applicant Not Found",
+      });
+    }
+    const applicant = await Applicant.findByIdAndDelete(id);
+    if (applicant) {
+      return res.status(200).json({
+        status: "200",
+        message: "Applicant Deleted Well",
+        data: applicant,
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      status: "500",
+      message: "Failed to Delete Applicant",
+      error: error.message,
+    });
+  }
+};
+
 
