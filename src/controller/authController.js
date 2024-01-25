@@ -1,36 +1,50 @@
 import Applicant from "../models/ApplicantModel";
-import generateToken from '../utils/tokenGeneretor.js'
+import generateToken from "../utils/tokenGeneretor.js";
+import bcrypt from "bcrypt";
+import { validationResult } from "express-validator";
 
-
-// Controller to login a user
 export const loginApplicant = async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { email, password } = req.body;
-  
-    if (!email || !password) {
-        return res.status(400).json({ message: "All fields are required" });
+
+    if (!email) {
+      return res.status(422).json({
+        message: "Email Required",
+      });
     }
-  
-    try {
-        const existingApplicant = await Applicant.findOne({ email });
-        if (!existingApplicant) {
-            return res.status(400).json({ message: "Applicant does not exist" });
-        }
-  
-        if (password !== existingApplicant.password) {
-            return res.status(400).json({ message: "Invalid credentials" });
-        }
-  
-        // Generate a token for the logged in user
-        const token = generateToken(existingApplicant);
-  
-        res.status(200).json({
-            message: "Applicant logged in successfully",
-            existingApplicant,
-            token,
-        });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Failed to login applicant", error });
+
+    const userLogin = await Applicant.findOne({ email });
+
+    if (!userLogin) {
+      return res.status(422).json({
+        message: "Applicant not found",
+      });
     }
-  };
-  
+
+    const isMatch = await bcrypt.compare(password, userLogin.password);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        message: "Incorrect password",
+      });
+    }
+
+    // Generate a token for the logged-in user
+    const token = generateToken(userLogin);
+
+    return res.status(200).json({
+      message: "Applicant logged in successfully",
+      data: userLogin,
+      token,
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: "Failed to login applicant", error: error.message });
+  }
+};
