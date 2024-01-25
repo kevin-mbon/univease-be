@@ -1,4 +1,7 @@
-import express from "express";
+import express from 'express';
+import { loginApplicant } from '../controller/authController.js';
+import { registerApplicant,getAllApplicant,updateApplicant,deleteApplicant } from '../controller/applicantController.js';
+import { body } from 'express-validator';
 import {
   deleteApplicant,
   getApplicant,
@@ -6,9 +9,11 @@ import {
   registerApplicant,
   updateApplicant,
 } from "../controller/applicantController.js";
-import { body } from "express-validator";
+
 import fileUpload from "../helper/multer.js";
 // import { authMiddleware } from '../middleware/authMiddleware.js';
+
+
 
 const applicantRouter = express.Router();
 
@@ -41,6 +46,9 @@ applicantRouter.post(
   registrationValidationRules,
   registerApplicant
 );
+// applicantRouter.get('/', getAllApplicant);
+applicantRouter.post('/auth', loginApplicant);
+
 
 applicantRouter.get("/read", getApplicant);
 applicantRouter.get("/read/:id", getOneApplicant);

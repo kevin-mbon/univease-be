@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
-import { validationResult } from "express-validator";
 import Applicant from "../models/ApplicantModel.js";
 import { uploadToCloud } from "../helper/cloudinary.js";
 import bcrypt from "bcrypt";
+import { validationResult } from 'express-validator';
 // Controller to register USER
 export const registerApplicant = async (req, res) => {
   try {
@@ -107,6 +107,8 @@ export const registerApplicant = async (req, res) => {
       error: error.message,
     });
   }
+
+}
 };
 
 // export const getAll Applicant

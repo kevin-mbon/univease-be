@@ -5,6 +5,9 @@ const universitySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  country: { type: String, required: true },
+  city: { type: String, required: true },
+  phoneNumber: { type: Number, required: true },
   universityLogo: {
     type: String,
   },
@@ -30,8 +33,7 @@ const universitySchema = new mongoose.Schema({
     type: String,
   },
   description: {
-    type: String,
-    required: true,
+    type: String
   },
   programsOffered: {
     type: [String],
