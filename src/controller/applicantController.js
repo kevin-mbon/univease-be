@@ -109,7 +109,6 @@ export const registerApplicant = async (req, res) => {
   }
 
 }
-};
 
 // export const getAll Applicant
 
