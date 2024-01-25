@@ -7,7 +7,6 @@ import {
   getApplicant,
   getOneApplicant,
   registerApplicant,
-  updateApplicant,
 } from "../controller/applicantController.js";
 
 import fileUpload from "../helper/multer.js";
