@@ -2,37 +2,48 @@ import express from "express";
 import { serve, setup } from "swagger-ui-express";
 
 const docrouter = express.Router();
-
 const local = process.env.LOCAL_HOST;
-
 
 const options = {
   openapi: "3.0.1",
   info: {
     title: "UNIVEASE API",
     version: "1.0.0",
-    description: "DOCUMENTATION FOR UNIVEASE API.",
+    description: "Documentation for UNIVEASE API.",
   },
   host: local,
-  basePath: '/',
+  basePath: "/",
   security: [
     {
-      bearerAuth: [],
+      bearerAuth: [], // Define the security requirement for endpoints
     },
   ],
-  tags: [{ name: "University", description: "University" }],
+  tags: [
+    {
+      name: "University",
+      description: "Operations related to University entities",
+    },
+    {
+      name: "User Applicant",
+      description: "Operations related to User Applicant entities",
+    },
+  ],
   paths: {
     "/api/v1/university/register": {
       post: {
         tags: ["University"],
-        description: "University register",
-        security: [],
+        description: "Register a new University",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
         parameters: [],
         requestBody: {
           content: {
             "application/json": {
               schema: {
-                $ref: '#/components/schemas/University',
+                $ref: "#/components/schemas/University",
               },
               example: {
                 universityName: "kepls",
@@ -50,7 +61,7 @@ const options = {
         },
         responses: {
           201: {
-            description: "New User was created successfully",
+            description: "New University was created successfully",
           },
           400: {
             description: "Bad Request",
@@ -65,14 +76,18 @@ const options = {
     "/api/v1/user/register": {
       post: {
         tags: ["User Applicant"],
-        description: "Applicant register",
-        security: [],
+        description: "Register a new User Applicant",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
         parameters: [],
         requestBody: {
           content: {
             "application/json": {
               schema: {
-                $ref: '#/components/schemas/University',
+                $ref: "#/components/schemas/University",
               },
               example: {
                 firstName: "Amani",
@@ -87,7 +102,7 @@ const options = {
         },
         responses: {
           201: {
-            description: "New User was created successfully",
+            description: "New User Applicant was created successfully",
           },
           400: {
             description: "Bad Request",
@@ -99,28 +114,119 @@ const options = {
       },
     },
 
-  },
-  components: {
-    schemas: {
-      University: {
-        type: 'object',
-        properties: {
-          universityName: {
-            type: "string",
-            description: "University name",
-            example: "kepls",
-          }
-          // Add other properties as needed
+    "/api/v1/blog/create": {
+      post: {
+        tags: ["Blog"],
+        description: "Create a new blog post",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        parameters: [],
+        requestBody: {
+          content: {
+            "multipart/form-data": {
+              schema: {
+                type: "object",
+                properties: {
+                  postTitle: {
+                    type: "string",
+                    description: "Title of the blog post",
+                    example: "Sample Title",
+                  },
+                  postContent: {
+                    type: "string",
+                    description: "Content of the blog post",
+                    example: "Sample content...",
+                  },
+                  postImage: {
+                    type: "string",
+                    format: "binary",
+                    description: "Image file for the blog post",
+                  },
+                },
+              },
+            },
+          },
+          required: true,
+        },
+        responses: {
+          201: {
+            description: "New Blog Post created successfully",
+          },
+          400: {
+            description: "Bad Request",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    // getAll Blog
+    "/api/v1/blog/read": {
+      get: {
+        tags: ["Blog"],
+        description: "Get all blog posts",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        responses: {
+          200: {
+            description: "All Blog Posts retrieved successfully",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/blog/read/{id}": {
+      get: {
+        tags: ["Blog"],
+        description: "Get a blog post by ID",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "ID of the blog post",
+            schema: {
+              type: "string",
+            },
+          },
+        ],
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        responses: {
+          200: {
+            description: "Blog Post retrieved successfully",
+          },
+          404: {
+            description: "Blog Post not found",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
         },
       },
     },
   },
-
-  securitySchemes: {
-    bearerAuth: {
-      type: "http",
-      scheme: "bearer",
-      bearerFormat: "JWT",
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+        in: "header",
+        name: "Authorization",
+      },
     },
   },
 };
