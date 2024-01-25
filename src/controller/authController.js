@@ -1,5 +1,4 @@
-import Applicant from "../models/ApplicantModel.js";
-import University from "../models/UniversityModel.js";
+import Applicant from "../models/ApplicantModel";
 import generateToken from '../utils/tokenGeneretor.js'
 
 
@@ -35,33 +34,3 @@ export const loginApplicant = async (req, res) => {
     }
   };
   
-  // Controller to login a university
-export const loginUniversity = async (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      res.status(400).json({ message: "All fields are required" });
-    }
-  
-    try {
-      const existingUniversity = await University.findOne({ email });
-      if (!existingUniversity) {
-        return res.status(400).json({ message: "University does not exist" });
-      }
-  
-      if (password !== existingUniversity.password) {
-        return res.status(400).json({ message: "Invalid credentials" });
-      }
-  
-      // Generate a token for the registered university
-      const token = generateToken(existingUniversity);
-  
-      res.status(200).json({
-        message: "University logged in successfully",
-        existingUniversity,
-        token,
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Failed to login university", error });
-    }
-  };

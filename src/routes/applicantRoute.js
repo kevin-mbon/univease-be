@@ -32,10 +32,15 @@ const registrationValidationRules = [
   }),
 ];
 
+applicantRouter.post(
+  "/register",
+  fileUpload.single("profile"),
+  registrationValidationRules,
+  registerApplicant
+);
+// applicantRouter.get('/', getAllApplicant);
+applicantRouter.post('/auth', loginApplicant);
 
-applicantRouter.post('/register',registrationValidationRules, registerApplicant);
-applicantRouter.get('/', getAllApplicant);
-applicantRouter.put('/update/:id',updateApplicant);
 
 // userRouter.get('/', authMiddleware, getAllUsers);
 

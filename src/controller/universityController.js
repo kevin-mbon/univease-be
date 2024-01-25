@@ -5,7 +5,6 @@ import { uploadToCloud } from "../helper/cloudinary.js";
 import bcrypt from "bcrypt";
 // Controller to register a university
 export const registerUniversity = async (req, res) => {
-
   try {
     const {
       universityName,
@@ -27,6 +26,11 @@ export const registerUniversity = async (req, res) => {
       verificationProcess,
     } = req.body;
 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     if (
       !universityName ||
       !universityType ||
@@ -40,28 +44,6 @@ export const registerUniversity = async (req, res) => {
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Passwords do not match" });
     }
-
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-  }
-
-  if (
-    !universityName ||
-    !email ||
-    !universityType ||
-    !country ||
-    !city ||
-    !phoneNumber ||
-    !password ||
-    !confirmPassword
-  ) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
-
-  if (password !== confirmPassword) {
-    return res.status(400).json({ message: "Passwords do not match" });
-  }
 
     const { address, phoneNumber, emailAddress } = contactInformation;
 
@@ -84,6 +66,14 @@ export const registerUniversity = async (req, res) => {
     }
     const existingUniversity = await University.findOne({
       universityName,
+    });
+
+    if (existingUniversity) {
+      return res.status(400).json({ message: "University already exists" });
+    }
+
+    const existingEmail = await University.findOne({
+      "contactInformation.emailAddress": emailAddress,
     });
 
     if (existingEmail) {
