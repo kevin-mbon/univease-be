@@ -4,7 +4,6 @@ import {
   getApplicant,
   getOneApplicant,
   registerApplicant,
-  updateApplicant,
 } from "../controller/applicantController.js";
 import { body } from "express-validator";
 import fileUpload from "../helper/multer.js";
