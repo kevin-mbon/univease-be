@@ -10,3 +10,7 @@ const protectRoute = (req, res, next) => {
 };
 
 export default protectRoute;
+
+
+
+

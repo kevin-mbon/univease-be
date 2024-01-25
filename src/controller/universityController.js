@@ -11,7 +11,9 @@ export const registerUniversity = async (req, res) => {
       universityType,
       description,
       password,
-      confirmPassword,
+      city,
+      country,
+      phoneNumbers,
       contactInformation,
       websiteURL,
       programsOffered,
@@ -31,38 +33,15 @@ export const registerUniversity = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    if (
-      !universityName ||
-      !universityType ||
-      !description ||
-      !password ||
-      !confirmPassword
-    ) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-
-    if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Passwords do not match" });
-    }
-
     const { address, phoneNumber, emailAddress } = contactInformation;
-
-    // Check if all contactInformation fields are provided
-    if (!address || !phoneNumber || !emailAddress) {
-      return res
-        .status(400)
-        .json({ message: "Complete contact information is required" });
-    }
 
     const { name, contactDetails } = admissionsContact;
 
     // Check if all admissionsContact fields are provided
     if (!name || !contactDetails) {
-      return res
-        .status(400)
-        .json({
-          message: "Complete admissions contact information is required",
-        });
+      return res.status(400).json({
+        message: "Complete admissions contact information is required",
+      });
     }
     const existingUniversity = await University.findOne({
       universityName,
@@ -109,6 +88,9 @@ export const registerUniversity = async (req, res) => {
       username,
       securityMeasures,
       verificationProcess,
+      city,
+      country,
+      phoneNumbers,
     });
     // Generate a token for the registered university
     const token = jwt.sign({ university }, process.env.SECRET_KEY);
@@ -174,7 +156,7 @@ export const updateUniversity = async (req, res) => {
     university.universityType = universityType;
     university.country = country;
     university.city = city;
-    university.phoneNumber = phoneNumber;
+    university.phoneNumbers = phoneNumber;
     university.password = password;
     university.confirmPassword = confirmPassword;
 
@@ -204,4 +186,3 @@ export const deleteUniversity = async (req, res) => {
     res.status(500).json({ message: "Failed to delete university", error });
   }
 };
-

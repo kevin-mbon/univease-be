@@ -3,11 +3,11 @@ import mongoose from "mongoose";
 const universitySchema = new mongoose.Schema({
   universityName: {
     type: String,
-    required: true,
+    required: false,
   },
-  country: { type: String, required: true },
-  city: { type: String, required: true },
-  phoneNumber: { type: Number, required: true },
+  country: { type: String, required: false },
+  city: { type: String, required: false },
+  phoneNumbers: { type: Number, required: false },
   universityLogo: {
     type: String,
   },
@@ -27,13 +27,13 @@ const universitySchema = new mongoose.Schema({
   },
   universityType: {
     type: String,
-    required: true,
+    required: false,
   },
   accreditation: {
     type: String,
   },
   description: {
-    type: String
+    type: String,
   },
   programsOffered: {
     type: [String],
@@ -66,11 +66,11 @@ const universitySchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: false,
   },
   confirmPassword: {
     type: String,
-    required: true,
+    required: false,
   },
   securityMeasures: {
     twoFactorAuthentication: {
@@ -79,6 +79,10 @@ const universitySchema = new mongoose.Schema({
   },
   verificationProcess: {
     type: String,
+  },
+  role: {
+    type: String,
+    default: "Admin",
   },
 });
 

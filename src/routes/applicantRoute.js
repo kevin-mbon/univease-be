@@ -1,5 +1,8 @@
 import express from "express";
-import { loginApplicant } from "../controller/authController.js";
+import {
+  loginApplicant,
+  // loginValidationRules,
+} from "../controller/authController.js";
 import { body } from "express-validator";
 import {
   deleteApplicant,
@@ -8,6 +11,7 @@ import {
   registerApplicant,
 } from "../controller/applicantController.js";
 import fileUpload from "../helper/multer.js";
+import { loginValidationRules } from "../service/authValidation.js";
 const applicantRouter = express.Router();
 
 const registrationValidationRules = [
@@ -40,7 +44,12 @@ applicantRouter.post(
   registerApplicant
 );
 
-applicantRouter.post("/auth", loginApplicant);
+applicantRouter.post(
+  "/auth",
+  fileUpload.single("file"),
+  loginValidationRules(),
+  loginApplicant
+);
 
 applicantRouter.get("/read", getApplicant);
 applicantRouter.get("/read/:id", getOneApplicant);
