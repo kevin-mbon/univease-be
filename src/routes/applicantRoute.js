@@ -1,5 +1,11 @@
 import express from "express";
-import { registerApplicant } from "../controller/applicantController.js";
+import {
+  deleteApplicant,
+  getApplicant,
+  getOneApplicant,
+  registerApplicant,
+  updateApplicant,
+} from "../controller/applicantController.js";
 import { body } from "express-validator";
 import fileUpload from "../helper/multer.js";
 // import { authMiddleware } from '../middleware/authMiddleware.js';
@@ -36,6 +42,9 @@ applicantRouter.post(
   registerApplicant
 );
 
-// userRouter.get('/', authMiddleware, getAllUsers);
+applicantRouter.get("/read", getApplicant);
+applicantRouter.get("/read/:id", getOneApplicant);
+applicantRouter.delete("/delete/:id", deleteApplicant);
+
 
 export default applicantRouter;
