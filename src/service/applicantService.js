@@ -58,7 +58,6 @@ export const createService = async (data) => {
 };
   
 
-// // Controller to register USER  
 // export const registerApplicant = async (req, res) => {
 //   try{
  

@@ -1,6 +1,4 @@
 import University from "../models/UniversityModel.js";
-import generateToken from '../utils/tokenGeneretor.js';
-
 export const createService = async (data) => {
     try{
         const {

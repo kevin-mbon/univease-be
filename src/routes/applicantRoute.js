@@ -7,10 +7,7 @@ import {
   getOneApplicant,
   registerApplicant,
 } from "../controller/applicantController.js";
-
 import fileUpload from "../helper/multer.js";
-// import { authMiddleware } from '../middleware/authMiddleware.js';
-
 const applicantRouter = express.Router();
 
 const registrationValidationRules = [
