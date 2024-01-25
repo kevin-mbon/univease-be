@@ -167,7 +167,6 @@ export const deleteApplicant = async (req, res) => {
       return res.status(200).json({
         status: "200",
         message: "Applicant Deleted Well",
-        data: applicant,
       });
     }
   } catch (error) {
