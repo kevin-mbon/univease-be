@@ -28,17 +28,7 @@ const Authorization = async (req, res, next) => {
     }
 
     req.University = loggedInUser;
-  
-    if (loggedInUser.role === "Admin") {
-      // Admin has access to all routes
-      next();
-    } else {
-      // Handle other roles if needed
-      return res.status(403).json({
-        status: "Failed",
-        message: "Unauthorized role",
-      });
-    }
+    next();
   } catch (error) {
     res.status(500).json({
       status: "Failed",

@@ -68,10 +68,6 @@ const universitySchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  confirmPassword: {
-    type: String,
-    required: false,
-  },
   securityMeasures: {
     twoFactorAuthentication: {
       type: Boolean,
@@ -79,10 +75,6 @@ const universitySchema = new mongoose.Schema({
   },
   verificationProcess: {
     type: String,
-  },
-  role: {
-    type: String,
-    default: "Admin",
   },
 });
 
