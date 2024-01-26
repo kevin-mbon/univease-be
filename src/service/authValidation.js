@@ -9,3 +9,10 @@ export const loginValidationRules = () => {
     check("password").notEmpty().withMessage("Password is required"),
   ];
 };
+
+export const universityloginValidationRules = () => {
+  return [
+    check("username").not().isEmpty().withMessage("Username Required"),
+    check("password").notEmpty().withMessage("Password is required"),
+  ];
+};
