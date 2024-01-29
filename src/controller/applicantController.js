@@ -1,8 +1,8 @@
-import jwt from "jsonwebtoken";
+import generateToken from "../utils/tokenGeneretor.js";
 import Applicant from "../models/ApplicantModel.js";
 import { uploadToCloud } from "../helper/cloudinary.js";
 import bcrypt from "bcrypt";
-import { validationResult } from 'express-validator';
+import { validationResult } from "express-validator";
 // Controller to register USER
 export const registerApplicant = async (req, res) => {
   try {
@@ -11,7 +11,6 @@ export const registerApplicant = async (req, res) => {
       secondName,
       email,
       password,
-      confirmPassword,
       gender,
       dateOfBirth,
       educationalBackground,
@@ -30,21 +29,10 @@ export const registerApplicant = async (req, res) => {
 
     const { highSchoolOrUniversity, graduationYear, gpaOrGrades } =
       educationalBackground;
-    const { englishProficiencyTest } = languageProficiency;
-    const { twoFactorAuthentication } = securityMeasures;
     const { uploadOption, contactInformation } = lettersOfRecommendation;
-    const { relevantExperience } = workExperience;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
-    }
-
-    if (!firstName || !secondName || !email || !password || !confirmPassword) {
-      return res.status(400).json({ message: "All fields are required" });
-    }
-
-    if (password !== confirmPassword) {
-      return res.status(400).json({ message: "Passwords do not match" });
     }
 
     const existingApplicant = await Applicant.findOne({
@@ -63,7 +51,6 @@ export const registerApplicant = async (req, res) => {
       profile: result?.secure_url,
       email,
       password: hashedPass,
-      confirmPassword: hashedPass,
       gender,
       dateOfBirth,
       educationalBackground: {
@@ -71,9 +58,7 @@ export const registerApplicant = async (req, res) => {
         graduationYear,
         gpaOrGrades,
       },
-      workExperience: {
-        relevantExperience,
-      },
+      workExperience,
       lettersOfRecommendation: {
         uploadOption,
         contactInformation,
@@ -81,20 +66,16 @@ export const registerApplicant = async (req, res) => {
       personalStatement,
       resume,
       portfolio,
-      languageProficiency: {
-        englishProficiencyTest,
-      },
+      languageProficiency,
       financialInformation,
       preferredStartDate,
       applicationFeePayment,
-      securityMeasures: {
-        twoFactorAuthentication,
-      },
+      securityMeasures,
       termsAndConditions,
     });
 
     // Generate a token for the registered university
-    const token = jwt.sign({ applicant }, "secretKey");
+    const token = generateToken(applicant.id);
     return res.status(200).json({
       message: "Applicant registered successfully",
       applicant,
@@ -107,8 +88,7 @@ export const registerApplicant = async (req, res) => {
       error: error.message,
     });
   }
-
-}
+};
 
 // export const getAll Applicant
 
@@ -177,5 +157,3 @@ export const deleteApplicant = async (req, res) => {
     });
   }
 };
-
-

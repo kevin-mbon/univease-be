@@ -114,9 +114,13 @@ const options = {
       },
     },
 
+
+
+    // Blog post
     "/api/v1/blog/create": {
       post: {
         tags: ["Blog"],
+        summary: "Create Blog Post",
         description: "Create a new blog post",
         security: [
           {
@@ -168,6 +172,7 @@ const options = {
     "/api/v1/blog/read": {
       get: {
         tags: ["Blog"],
+        summary: "Get All Blog",
         description: "Get all blog posts",
         security: [
           {
@@ -187,6 +192,7 @@ const options = {
     "/api/v1/blog/read/{id}": {
       get: {
         tags: ["Blog"],
+        summary: "Read Blog By ID",
         description: "Get a blog post by ID",
         parameters: [
           {
@@ -196,6 +202,7 @@ const options = {
             description: "ID of the blog post",
             schema: {
               type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
             },
           },
         ],
@@ -217,6 +224,120 @@ const options = {
         },
       },
     },
+
+    "/api/v1/blog/delete/{id}": {
+      delete: {
+        tags: ["Blog"],
+        summary: "Delete a blog post",
+        description: "Delete an existing blog post by its ID.",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+            description: "Unique identifier of the blog post to be deleted",
+          },
+        ],
+        responses: {
+          200: {
+            description: "Blog post deleted successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "Blog post not found",
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+    },
+
+    "/api/v1/blog/update/{id}": {
+      put: {
+        tags: ["Blog"],
+        summary: "Update a blog post",
+        description: "Update an existing blog post with new data.",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+            description: "Unique identifier of the blog post to be deleted",
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            "multipart/form-data": {
+              schema: {
+                type: "object",
+                properties: {
+                  postTitle: {
+                    type: "string",
+                    description: "Title of the blog post",
+                  },
+                  postContent: {
+                    type: "string",
+                    description: "Content of the blog post",
+                  },
+                  postImage: {
+                    type: "string",
+                    format: "binary",
+                    description: "Image file for the blog post",
+                  },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: "Blog post updated successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "Not found",
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+    },
+
+
+
+
+    
   },
   components: {
     securitySchemes: {

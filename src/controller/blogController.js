@@ -118,10 +118,11 @@ export const deletePost = async (req, res) => {
 // Update Blog
 export const updatePost = async (req, res) => {
   try {
-    const { postTitle, postContent } = req.body;
     const { id } = req.params;
-    const findID = await blog.findById(id);
-    if (!findID) {
+    const { postTitle, postContent } = req.body;
+
+    const findid = await blog.findById(id);
+    if (!findid) {
       return res.status(404).json({
         status: "404",
         message: "Post Not Found",
@@ -129,21 +130,20 @@ export const updatePost = async (req, res) => {
     }
     let result;
     if (req.file) result = await uploadToCloud(req.file, res);
-    const MakePost = await blog.findByIdAndUpdate(id, {
+    await blog.findByIdAndUpdate(id, {
       postImage: result?.secure_url,
       postTitle,
       postContent,
     });
-    if (MakePost) {
-      return res.status(201).json({
-        status: "201",
-        message: "Post Updated Well",
-      });
-    }
+
+    return res.status(201).json({
+      status: "201",
+      message: "Post Updated Well",
+    });
   } catch (error) {
     return res.status(500).json({
       status: "500",
-      message: "Failed To Create Blog",
+      message: "Failed To Update Blog",
       error: error.message,
     });
   }
