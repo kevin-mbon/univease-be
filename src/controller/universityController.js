@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import generateToken from "../utils/tokenGeneretor.js";
 import { validationResult } from "express-validator";
 import University from "../models/UniversityModel.js";
 import { uploadToCloud } from "../helper/cloudinary.js";
@@ -37,12 +37,6 @@ export const registerUniversity = async (req, res) => {
 
     const { name, contactDetails } = admissionsContact;
 
-    // Check if all admissionsContact fields are provided
-    if (!name || !contactDetails) {
-      return res.status(400).json({
-        message: "Complete admissions contact information is required",
-      });
-    }
     const existingUniversity = await University.findOne({
       universityName,
     });
@@ -67,7 +61,6 @@ export const registerUniversity = async (req, res) => {
       universityLogo: result?.secure_url,
       description,
       password: hashedPass,
-      confirmPassword: hashedPass,
       universityType,
       contactInformation: {
         address,
@@ -93,7 +86,7 @@ export const registerUniversity = async (req, res) => {
       phoneNumbers,
     });
     // Generate a token for the registered university
-    const token = jwt.sign({ university }, process.env.SECRET_KEY);
+    const token = generateToken(university.id);
 
     return res.status(200).json({
       message: "University registered successfully",

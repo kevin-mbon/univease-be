@@ -8,8 +8,6 @@ const applicantSchema = new mongoose.Schema({
   gender: { type: String, enum: ["female", "male", "other"] },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  confirmPassword: { type: String, required: true },
-
   educationalBackground: {
     highSchoolOrUniversity: {
       type: String,
@@ -22,9 +20,7 @@ const applicantSchema = new mongoose.Schema({
     },
   },
   workExperience: {
-    relevantExperience: {
-      type: String,
-    },
+    type: String,
   },
   lettersOfRecommendation: {
     uploadOption: {
@@ -45,9 +41,7 @@ const applicantSchema = new mongoose.Schema({
     type: String,
   },
   languageProficiency: {
-    englishProficiencyTest: {
-      type: String,
-    },
+    type: String,
   },
   financialInformation: {
     type: String,
@@ -60,10 +54,8 @@ const applicantSchema = new mongoose.Schema({
     default: false,
   },
   securityMeasures: {
-    twoFactorAuthentication: {
-      type: Boolean,
-      default: false,
-    },
+    type: Boolean,
+    default: false,
   },
   termsAndConditions: {
     type: Boolean,
