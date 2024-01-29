@@ -8,6 +8,11 @@ const adminSchema = new mongoose.Schema({
         gender: { type: String,
             enum: ['female','male','other']
         },
+        role: {
+            type: String,
+            enum: ['admin', 'applicant', 'university'],
+            required: true,
+          },
         email: {type: String, required: true},
         password: { type:String, required: true},
         confirmPassword: { type:String, required: true} 

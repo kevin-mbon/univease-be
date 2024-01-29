@@ -3,7 +3,7 @@ import University from "../models/UniversityModel.js";
 import generateToken from "../utils/tokenGeneretor.js";
 import bcrypt from "bcrypt";
 import { validationResult } from "express-validator";
-
+import BlacklistedToken from "../models/blackListedToken.js";
 export const loginApplicant = async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -92,3 +92,23 @@ export const loginUniversity = async (req, res) => {
     });
   }
 };
+export const logoutApplicant = async (req, res) => {
+  
+    const authHeader = req.headers.authorization;
+    const token = authHeader.split(' ')[1];
+
+    // Add the token to the blacklist
+    if (token) {
+      await BlacklistedToken.create({ token });
+    }
+
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: 'Error while logging out.' });
+      }
+
+      res.clearCookie('connect.sid');
+      res.json({ message: 'Logged out successfully.' });
+    });
+  
+  }
