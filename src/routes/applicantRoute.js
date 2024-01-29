@@ -1,8 +1,9 @@
 import express from "express";
 import {
-  loginApplicant,
+  loginApplicant,logoutApplicant,
   // loginValidationRules,
 } from "../controller/authController.js";
+import { authMiddleware } from '../middleware/authMiddleware.js'
 import { body } from "express-validator";
 import {
   deleteApplicant,
@@ -50,7 +51,7 @@ applicantRouter.post(
   loginValidationRules(),
   loginApplicant
 );
-
+applicantRouter.post("/auth/logout", authMiddleware,logoutApplicant);
 applicantRouter.get("/read", getApplicant);
 applicantRouter.get("/read/:id", getOneApplicant);
 applicantRouter.delete("/delete/:id", deleteApplicant);

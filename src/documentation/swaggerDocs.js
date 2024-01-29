@@ -109,8 +109,67 @@ const options = {
         },
       },
     },
-
-    // Blog post
+    "/api/v1/user/auth": {
+      post: {
+        tags: ["User Login"],
+        description: "Try a User Login ",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        parameters: [],
+        requestBody: {
+          content: {
+            "application/json": {
+              // schema: {
+              //   $ref: "#/components/schemas/University",
+              // }, 
+              example: {
+                email: "kalisa@gmail.com",
+                password: "1234qw"
+              },
+            },
+          },
+          required: true,
+        },
+        responses: {
+          201: {
+            description: "User was logged in successfully",
+          },
+          400: {
+            description: "Bad Request",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "api/v1/auth/logout":{
+     post: {
+      tags: ["user logout"],
+      description: "logging out a user",
+      security: [
+        {
+          bearerAuth: [], // Add the security requirement for this endpoint
+        },
+      ],
+      parameters: [],
+      required : true,
+       responses: {
+          200: {
+            description: 'User successfully logged out',
+          },
+          401: {
+            description: 'Unauthorized: User not logged in',
+          },
+          500: {
+            description: 'Internal Server Error',
+          },
+        },
+     }
+    },
     "/api/v1/blog/create": {
       post: {
         tags: ["Blog"],
