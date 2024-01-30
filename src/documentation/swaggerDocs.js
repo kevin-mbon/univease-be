@@ -146,7 +146,7 @@ const options = {
         },
       },
     },
-    "api/v1/auth/logout":{
+    "/api/v1/user/auth/logout":{
      post: {
       tags: ["user logout"],
       description: "logging out a user",
