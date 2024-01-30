@@ -2,6 +2,7 @@ import generateToken from "../utils/tokenGeneretor.js";
 import Applicant from "../models/ApplicantModel.js";
 import { uploadToCloud } from "../helper/cloudinary.js";
 import bcrypt from "bcrypt";
+import { sendMail } from "../helper/nodeMailer.js";
 import { validationResult } from "express-validator";
 // Controller to register USER
 export const registerApplicant = async (req, res) => {
@@ -30,7 +31,6 @@ export const registerApplicant = async (req, res) => {
       termsAndConditions,
     } = req.body;
 
-  
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -75,12 +75,23 @@ export const registerApplicant = async (req, res) => {
       termsAndConditions,
     });
 
+    // Customize the email message
+    const emailTemplate = {
+      emailTo: email,
+      subject: "Welcome to the UnivEase!",
+      message: `<h1> Dear ${firstName}, </h1> 
+                 <p> Welcome to the UnivEase! We're excited to have you on board.</p>
+                 <p> Thank you for creating an account with us.</p>
+`,
+    };
+    sendMail(emailTemplate);
+    
     // Generate a token for the registered university
     const token = generateToken(applicant.id);
     return res.status(200).json({
       message: "Applicant registered successfully",
       applicant: {
-        id:applicant._id,
+        id: applicant._id,
         firstName,
         secondName,
         profile: result?.secure_url,

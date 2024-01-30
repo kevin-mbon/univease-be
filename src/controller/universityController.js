@@ -3,20 +3,19 @@ import { validationResult } from "express-validator";
 import University from "../models/UniversityModel.js";
 import { uploadToCloud } from "../helper/cloudinary.js";
 import bcrypt from "bcrypt";
+import { sendMail } from "../helper/nodeMailer.js";
 // Controller to register a university
 export const registerUniversity = async (req, res) => {
   try {
     const {
       universityName,
       universityType,
+      email,
       description,
       password,
       city,
       country,
       phoneNumbers,
-      address,
-      phoneNumber,
-      emailAddress,
       websiteURL,
       programsOffered,
       applicationRequirements,
@@ -54,11 +53,7 @@ export const registerUniversity = async (req, res) => {
       description,
       password: hashedPass,
       universityType,
-      contactInformation: {
-        address,
-        phoneNumber,
-        emailAddress,
-      },
+      email,
       admissionsContact: {
         name,
         contactDetails,
@@ -79,7 +74,16 @@ export const registerUniversity = async (req, res) => {
     });
     // Generate a token for the registered university
     const token = generateToken(university.id);
-
+    // Customize the email message
+    const emailTemplate = {
+      emailTo: email,
+      subject: "Welcome to the UnivEase!",
+      message: `<h1> Dear ${universityName}, </h1> 
+                 <p> Welcome to the UnivEase! We're excited to have you on board.</p>
+                 <p> Thank you for creating an account with us.</p>
+`,
+    };
+    sendMail(emailTemplate);
     return res.status(200).json({
       message: "University registered successfully",
       university,
