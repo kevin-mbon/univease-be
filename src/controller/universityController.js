@@ -14,13 +14,16 @@ export const registerUniversity = async (req, res) => {
       city,
       country,
       phoneNumbers,
-      contactInformation,
+      address,
+      phoneNumber,
+      emailAddress,
       websiteURL,
       programsOffered,
       applicationRequirements,
       applicationDeadline,
       tuitionAndFees,
-      admissionsContact,
+      name,
+      contactDetails,
       socialMediaLinks,
       termsAndConditions,
       username,
@@ -33,10 +36,6 @@ export const registerUniversity = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { address, phoneNumber, emailAddress } = contactInformation;
-
-    const { name, contactDetails } = admissionsContact;
-
     const existingUniversity = await University.findOne({
       universityName,
     });
@@ -45,13 +44,6 @@ export const registerUniversity = async (req, res) => {
       return res.status(400).json({ message: "University already exists" });
     }
 
-    const existingEmail = await University.findOne({
-      "contactInformation.emailAddress": emailAddress,
-    });
-
-    if (existingEmail) {
-      return res.status(400).json({ message: "Email already exists" });
-    }
     let result;
     if (req.file) result = await uploadToCloud(req.file, res);
     const salt = await bcrypt.genSalt(10);
