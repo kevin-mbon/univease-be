@@ -24,6 +24,12 @@ export const registrationValidationRules = [
     .not()
     .isEmpty()
     .withMessage("University name is required."),
+  body("email")
+    .trim()
+    .not()
+    .isEmpty()
+    .isEmail()
+    .withMessage("Email is required."),
 
   body("password")
     .isLength({ min: 6 })
@@ -55,12 +61,8 @@ export const programValidationRules = () => {
   return [
     check("name").notEmpty().withMessage("Program Name Required"),
     check("tags").notEmpty().withMessage("Tags Required"),
-    // check("tuitionAndFees").notEmpty().withMessage("tuitionAndFees Required"),
     check("degree").notEmpty().withMessage("Degree Required"),
     check("degreeOverview").notEmpty().withMessage("Deegree Overview Required"),
     check("components").notEmpty().withMessage("Components Required"),
-  //   check("programExtension")
-  //     .notEmpty()
-  //     .withMessage("programExtension Required"),
   ];
 };

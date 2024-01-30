@@ -9,19 +9,9 @@ const universitySchema = new mongoose.Schema(
     country: { type: String, required: false },
     city: { type: String, required: false },
     phoneNumbers: { type: Number, required: false },
+    email: { type: String, required: false },
     universityLogo: {
       type: String,
-    },
-    contactInformation: {
-      address: {
-        type: String,
-      },
-      phoneNumber: {
-        type: String,
-      },
-      emailAddress: {
-        type: String,
-      },
     },
     websiteURL: {
       type: String,
