@@ -114,8 +114,6 @@ const options = {
       },
     },
 
-
-
     // Blog post
     "/api/v1/blog/create": {
       post: {
@@ -334,10 +332,215 @@ const options = {
       },
     },
 
+    // Testimonial
+    "/api/v1/testmonial/create": {
+      post: {
+        tags: ["Testmonial"],
+        summary: "Create testmonial Post",
+        description: "Create a new testmonial post",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        parameters: [],
+        requestBody: {
+          content: {
+            "multipart/form-data": {
+              schema: {
+                type: "object",
+                properties: {
+                  post: {
+                    type: "string",
+                    description: "Content of the testmonial post",
+                    example: "Sample content...",
+                  },
+                  location: {
+                    type: "string",
+                    description: "Campus You In",
+                    example: "Location content...",
+                  },
+                },
+              },
+            },
+          },
+          required: true,
+        },
+        responses: {
+          201: {
+            description: "New testmonial Post created successfully",
+          },
+          400: {
+            description: "Bad Request",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    // getAll Blog
+    "/api/v1/testmonial/read": {
+      get: {
+        tags: ["Testmonial"],
+        summary: "Get All testmonial",
+        description: "Get all testmonial posts",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        responses: {
+          200: {
+            description: "All testmonial Posts retrieved successfully",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/testmonial/read/{id}": {
+      get: {
+        tags: ["Testmonial"],
+        summary: "Read testmonial By ID",
+        description: "Get a testmonial post by ID",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "ID of the testmonial post",
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+          },
+        ],
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        responses: {
+          200: {
+            description: "testmonial Post retrieved successfully",
+          },
+          404: {
+            description: "testmonial Post not found",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
 
+    "/api/v1/testmonial/delete/{id}": {
+      delete: {
+        tags: ["Testmonial"],
+        summary: "Delete a testmonial post",
+        description: "Delete an existing testmonial post by its ID.",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+            description:
+              "Unique identifier of the testmonial post to be deleted",
+          },
+        ],
+        responses: {
+          200: {
+            description: "testmonial post deleted successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "testmonial post not found",
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+    },
 
-
-    
+    "/api/v1/testmonial/update/{id}": {
+      put: {
+        tags: ["Testmonial"],
+        summary: "Update a testmonial post",
+        description: "Update an existing testmonial post with new data.",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+            description:
+              "Unique identifier of the testmonial post to be deleted",
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            "multipart/form-data": {
+              schema: {
+                type: "object",
+                properties: {
+                  post: {
+                    type: "string",
+                    description: "Content of the testmonial post",
+                  },
+                  location: {
+                    type: "string",
+                    description: "Where you Located",
+                  },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: "testmonial post updated successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "Not found",
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+    },
   },
   components: {
     securitySchemes: {
