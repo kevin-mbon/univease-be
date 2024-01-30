@@ -42,15 +42,11 @@ const options = {
         requestBody: {
           content: {
             "application/json": {
-              schema: {
-                $ref: "#/components/schemas/University",
-              },
               example: {
                 universityName: "kepls",
                 email: "kepla@gmail.com",
                 country: "Rwanda",
                 city: "Kigali",
-                phoneNumber: "0780000000",
                 universityType: "public",
                 password: "1234qw",
                 confirmPassword: "1234qw",
@@ -86,13 +82,13 @@ const options = {
         requestBody: {
           content: {
             "application/json": {
-              schema: {
-                $ref: "#/components/schemas/University",
-              },
               example: {
                 firstName: "Amani",
                 secondName: "Kalisa",
                 email: "kalisa@gmail.com",
+                workExperience: "",
+                contactInformation: "",
+                highSchoolOrUniversity: "",
                 password: "1234qw",
                 confirmPassword: "1234qw",
               },

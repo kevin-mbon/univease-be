@@ -13,9 +13,12 @@ export const registerApplicant = async (req, res) => {
       password,
       gender,
       dateOfBirth,
-      educationalBackground,
+      highSchoolOrUniversity,
+      graduationYear,
+      gpaOrGrades,
       workExperience,
-      lettersOfRecommendation,
+      uploadOption,
+      contactInformation,
       personalStatement,
       resume,
       portfolio,
@@ -27,9 +30,7 @@ export const registerApplicant = async (req, res) => {
       termsAndConditions,
     } = req.body;
 
-    const { highSchoolOrUniversity, graduationYear, gpaOrGrades } =
-      educationalBackground;
-    const { uploadOption, contactInformation } = lettersOfRecommendation;
+  
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -78,7 +79,34 @@ export const registerApplicant = async (req, res) => {
     const token = generateToken(applicant.id);
     return res.status(200).json({
       message: "Applicant registered successfully",
-      applicant,
+      applicant: {
+        id:applicant._id,
+        firstName,
+        secondName,
+        profile: result?.secure_url,
+        email,
+        gender,
+        dateOfBirth,
+        educationalBackground: {
+          highSchoolOrUniversity,
+          graduationYear,
+          gpaOrGrades,
+        },
+        workExperience,
+        lettersOfRecommendation: {
+          uploadOption,
+          contactInformation,
+        },
+        personalStatement,
+        resume,
+        portfolio,
+        languageProficiency,
+        financialInformation,
+        preferredStartDate,
+        applicationFeePayment,
+        securityMeasures,
+        termsAndConditions,
+      },
       token,
     });
   } catch (error) {

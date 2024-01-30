@@ -48,3 +48,19 @@ export const testmonialValidationRule = () => {
     check("location").notEmpty().withMessage("Campus Required"),
   ];
 };
+
+// Program
+
+export const programValidationRules = () => {
+  return [
+    check("name").notEmpty().withMessage("Program Name Required"),
+    check("tags").notEmpty().withMessage("Tags Required"),
+    // check("tuitionAndFees").notEmpty().withMessage("tuitionAndFees Required"),
+    check("degree").notEmpty().withMessage("Degree Required"),
+    check("degreeOverview").notEmpty().withMessage("Deegree Overview Required"),
+    check("components").notEmpty().withMessage("Components Required"),
+  //   check("programExtension")
+  //     .notEmpty()
+  //     .withMessage("programExtension Required"),
+  ];
+};
