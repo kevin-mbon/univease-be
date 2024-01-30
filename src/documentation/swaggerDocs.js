@@ -375,7 +375,7 @@ const options = {
         },
       },
     },
-    // getAll Blog
+    // getAll Testimonial
     "/api/v1/testmonial/read": {
       get: {
         tags: ["Testmonial"],
@@ -512,6 +512,297 @@ const options = {
                   location: {
                     type: "string",
                     description: "Where you Located",
+                  },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: "testmonial post updated successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "Not found",
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+    },
+    // getAll Program
+    "/api/v1/program/create": {
+      post: {
+        tags: ["Program"],
+        summary: "Create program Post",
+        description: "Create a new program post",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        parameters: [],
+        requestBody: {
+          content: {
+            "multipart/form-data": {
+              schema: {
+                type: "object",
+                properties: {
+                  name: {
+                    type: "string",
+                    description: "name of the program post",
+                    example: "Sample name...",
+                  },
+                  tags: {
+                    type: "string",
+                    description: "Related Subject",
+                    example: "tags content...",
+                  },
+                  registration: {
+                    type: "string",
+                    description: "registration fees",
+                    example: "registration content...",
+                  },
+                  scholarship: {
+                    type: "string",
+                    description: "scholarship fees",
+                    example: "scholarship content...",
+                  },
+                  hostel: {
+                    type: "string",
+                    description: "hostel fees",
+                    example: "hostel content...",
+                  },
+                  degree: {
+                    type: "string",
+                    description: "Your Higest Certificate",
+                    example: "Degree content...",
+                  },
+                  degreeOverview: {
+                    type: "string",
+                    description:
+                      "Description about  Higest Certificate you are going to get",
+                    example: "DegreeOverview content...",
+                  },
+                  components: {
+                    type: "string",
+                    description: "components Included",
+                    example: "components content...",
+                  },
+                  wayTolearn: {
+                    type: "string",
+                    description: "wayTolearn Included",
+                    example: "wayTolearn content...",
+                  },
+                  related: {
+                    type: "string",
+                    description: "related certificate Included",
+                    example: "related content...",
+                  },
+                },
+              },
+            },
+          },
+          required: true,
+        },
+        responses: {
+          201: {
+            description: "New program Post created successfully",
+          },
+          400: {
+            description: "Bad Request",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/program/read": {
+      get: {
+        tags: ["Program"],
+        summary: "Get All program",
+        description: "Get all program posts",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        responses: {
+          200: {
+            description: "All program Posts retrieved successfully",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/program/read/{id}": {
+      get: {
+        tags: ["Program"],
+        summary: "Read program By ID",
+        description: "Get a program post by ID",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "ID of the program post",
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+          },
+        ],
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        responses: {
+          200: {
+            description: "program Post retrieved successfully",
+          },
+          404: {
+            description: "program Post not found",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+
+    "/api/v1/program/delete/{id}": {
+      delete: {
+        tags: ["Program"],
+        summary: "Delete a program post",
+        description: "Delete an existing program post by its ID.",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+            description: "Unique identifier of the program post to be deleted",
+          },
+        ],
+        responses: {
+          200: {
+            description: "program post deleted successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "testmonial post not found",
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+    },
+
+    "/api/v1/program/update/{id}": {
+      put: {
+        tags: ["Program"],
+        summary: "Update a program post",
+        description: "Update an existing program post with new data.",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+            description:
+              "Unique identifier of the testmonial post to be deleted",
+          },
+        ],
+        requestBody: {
+          required: true,
+          content: {
+            "multipart/form-data": {
+              schema: {
+                type: "object",
+                properties: {
+                  name: {
+                    type: "string",
+                    description: "name of the program post",
+                    example: "Sample name...",
+                  },
+                  tags: {
+                    type: "string",
+                    description: "Related Subject",
+                    example: "tags content...",
+                  },
+                  registration: {
+                    type: "string",
+                    description: "registration fees",
+                    example: "registration content...",
+                  },
+                  scholarship: {
+                    type: "string",
+                    description: "scholarship fees",
+                    example: "scholarship content...",
+                  },
+                  hostel: {
+                    type: "string",
+                    description: "hostel fees",
+                    example: "hostel content...",
+                  },
+                  degree: {
+                    type: "string",
+                    description: "Your Higest Certificate",
+                    example: "Degree content...",
+                  },
+                  degreeOverview: {
+                    type: "string",
+                    description:
+                      "Description about  Higest Certificate you are going to get",
+                    example: "DegreeOverview content...",
+                  },
+                  components: {
+                    type: "string",
+                    description: "components Included",
+                    example: "components content...",
+                  },
+                  wayTolearn: {
+                    type: "string",
+                    description: "wayTolearn Included",
+                    example: "wayTolearn content...",
+                  },
+                  related: {
+                    type: "string",
+                    description: "related certificate Included",
+                    example: "related content...",
                   },
                 },
               },
