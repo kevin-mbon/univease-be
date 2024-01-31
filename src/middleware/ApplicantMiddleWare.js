@@ -21,7 +21,7 @@ const Authorization = async (req, res, next) => {
     const loggedInUser = await Applicant.findById(decoded.id);
 
     if (!loggedInUser) {
-      return res.status(403).json({
+      return res.status(40).json({
         status: "Failed",
         message: "Token has expired, please login again",
       });

@@ -94,21 +94,24 @@ export const loginUniversity = async (req, res) => {
 };
 export const logoutApplicant = async (req, res) => {
   
-    const authHeader = req.headers.authorization;
-    const token = authHeader.split(' ')[1];
+  const authHeader = req.headers.authorization;
+  const token = authHeader.split(' ')[1];
 
-    // Add the token to the blacklist
-    if (token) {
-      await BlacklistedToken.create({ token });
+  // Add the token to the blacklist
+  if (token) {
+    console.log(token);
+    await BlacklistedToken.create({ token });
+  }
+
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error while logging out.' });
     }
 
-    req.session.destroy((err) => {
-      if (err) {
-        return res.status(500).json({ message: 'Error while logging out.' });
-      }
+    // if (req.session.token) {
+    // };
 
-      res.clearCookie('connect.sid');
-      res.json({ message: 'Logged out successfully.' });
-    });
+    res.clearCookie('connect.sid');
+    res.json({ message: 'Logged out successfully.' });
   
-  }
+})}
