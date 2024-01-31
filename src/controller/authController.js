@@ -107,10 +107,6 @@ export const logoutApplicant = async (req, res) => {
     if (err) {
       return res.status(500).json({ message: 'Error while logging out.' });
     }
-
-    // if (req.session.token) {
-    // };
-
     res.clearCookie('connect.sid');
     res.json({ message: 'Logged out successfully.' });
   
