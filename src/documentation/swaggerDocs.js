@@ -146,11 +146,7 @@ const options = {
         },
       },
     },
-<<<<<<< HEAD
     "/api/v1/user/auth/logout":{
-=======
-    "api/v1/auth/logout":{
->>>>>>> 8c83ca2 (rebase is  done)
      post: {
       tags: ["user logout"],
       description: "logging out a user",
