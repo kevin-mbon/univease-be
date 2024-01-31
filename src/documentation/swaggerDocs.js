@@ -69,6 +69,63 @@ const options = {
       },
     },
 
+    "/api/v1/university/read": {
+      get: {
+        tags: ["University"],
+        summary: "Get All University",
+        description: "Get all University posts",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        responses: {
+          200: {
+            description: "All University Posts retrieved successfully",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+
+    "/api/v1/university/read/{id}": {
+      get: {
+        tags: ["University"],
+        summary: "Read university By ID",
+        description: "Get a university post by ID",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "ID of the university post",
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+          },
+        ],
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        responses: {
+          200: {
+            description: "University Post retrieved successfully",
+          },
+          404: {
+            description: "University Post not found",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+
     "/api/v1/user/register": {
       post: {
         tags: ["User Applicant"],
@@ -124,10 +181,10 @@ const options = {
             "application/json": {
               // schema: {
               //   $ref: "#/components/schemas/University",
-              // }, 
+              // },
               example: {
                 email: "kalisa@gmail.com",
-                password: "1234qw"
+                password: "1234qw",
               },
             },
           },
@@ -146,29 +203,29 @@ const options = {
         },
       },
     },
-    "/api/v1/user/auth/logout":{
-     post: {
-      tags: ["user logout"],
-      description: "logging out a user",
-      security: [
-        {
-          bearerAuth: [], // Add the security requirement for this endpoint
-        },
-      ],
-      parameters: [],
-      required : true,
-       responses: {
+    "/api/v1/user/auth/logout": {
+      post: {
+        tags: ["user logout"],
+        description: "logging out a user",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        parameters: [],
+        required: true,
+        responses: {
           200: {
-            description: 'User successfully logged out',
+            description: "User successfully logged out",
           },
           401: {
-            description: 'Unauthorized: User not logged in',
+            description: "Unauthorized: User not logged in",
           },
           500: {
-            description: 'Internal Server Error',
+            description: "Internal Server Error",
           },
         },
-     }
+      },
     },
     "/api/v1/blog/create": {
       post: {

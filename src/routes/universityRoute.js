@@ -1,5 +1,9 @@
 import express from "express";
-import { registerUniversity } from "../controller/universityController.js";
+import {
+  getAllUniversities,
+  registerUniversity,
+  getUniversityById,
+} from "../controller/universityController.js";
 import fileUpload from "../helper/multer.js";
 import { loginUniversity } from "../controller/authController.js";
 import { registrationValidationRules } from "../service/Validation.js";
@@ -20,5 +24,8 @@ univRouter.post(
   universityloginValidationRules(),
   loginUniversity
 );
+
+univRouter.get("/read", getAllUniversities);
+univRouter.get("/read/:id", getUniversityById);
 
 export default univRouter;
