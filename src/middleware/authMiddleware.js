@@ -1,16 +1,32 @@
-const protectRoute = (req, res, next) => {
-    // Check if the user is authenticated
-    if (req.isAuthenticated()) {
-        // User is authenticated, allow access to the route
-        next();
-    } else {
-        // User is not authenticated, redirect to login page or send an error response
-        res.status(401).json({ error: 'Unauthorized' });
+import jwt from 'jsonwebtoken'
+import BlacklistedToken from "../models/blackListedToken.js";
+export const authMiddleware = async (req, res, next) => {
+    const authHeader = req.headers.authorization;
+  
+    if (!authHeader) {
+      return res
+        .status(401)
+        .json({ message: "Not Authenticated! no token provided." });
     }
-};
-
-export default protectRoute;
-
-
-
-
+  
+    const token = authHeader.split(" ")[1];
+    const blacklistedToken = await BlacklistedToken.findOne({ token });
+  
+    if (blacklistedToken) {
+      return res.status(401).json({ error: "Token is blacklisted. Please log in again." });
+    }
+  
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        console.log(err.message);
+        return res
+          .status(401)
+          .json({ message: "Not Authorized! Invalid token." });
+      }
+  
+      // Store the decoded token in the request for use in other routes if needed
+      // req.session.token = decoded;
+  
+      next();
+    });
+  };
