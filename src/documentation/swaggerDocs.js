@@ -125,6 +125,48 @@ const options = {
         },
       },
     },
+    "/api/v1/university/delete/{id}": {
+      delete: {
+        tags: ["University"],
+        summary: "Delete a university post",
+        description: "Delete an existing university post by its ID.",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+            description:
+              "Unique identifier of the university post to be deleted",
+          },
+        ],
+        responses: {
+          200: {
+            description: "university post deleted successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "Blog post not found",
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+    },
 
     "/api/v1/user/register": {
       post: {

@@ -3,6 +3,7 @@ import {
   getAllUniversities,
   registerUniversity,
   getUniversityById,
+  deleteUniversity,
 } from "../controller/universityController.js";
 import fileUpload from "../helper/multer.js";
 import { loginUniversity } from "../controller/authController.js";
@@ -27,5 +28,6 @@ univRouter.post(
 
 univRouter.get("/read", getAllUniversities);
 univRouter.get("/read/:id", getUniversityById);
+univRouter.delete("/delete/:id", deleteUniversity);
 
 export default univRouter;

@@ -167,7 +167,7 @@ export const deleteUniversity = async (req, res) => {
       return res.status(400).json({ message: "University does not exist" });
     }
 
-    await university.remove();
+    await University.findByIdAndDelete(id);
 
     res.status(200).json({ message: "University deleted successfully" });
   } catch (error) {
