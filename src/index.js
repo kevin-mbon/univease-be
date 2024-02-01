@@ -5,7 +5,7 @@ import router from "./routes/index.js";
 import dbConnector from "./app.js";
 import morgan from "morgan";
 import cors from "cors";
-import session from 'express-session';
+import session from "express-session";
 const app = express();
 dotenv.config();
 
@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'anything',
+    secret: process.env.SESSION_SECRET || "anything",
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -24,14 +24,13 @@ app.use(
       httpOnly: true,
       secure: false, // Set to true in production with HTTPS
     },
-  }),
+  })
 );
-
 
 app.use(express.json());
 // Routes
 app.use("/api/v1/", router);
-dbConnector;    
+dbConnector;
 const PORT = process.env.PORT || 4200;
 
 app.listen(process.env.PORT, () => {
