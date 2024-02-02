@@ -24,8 +24,24 @@ const options = {
       description: "Operations related to University entities",
     },
     {
-      name: "User Applicant",
+      name: "Applicant",
       description: "Operations related to User Applicant entities",
+    },
+    {
+      name: "Blog",
+      description: "Operations related to Blog Post entities",
+    },
+    {
+      name: "Program",
+      description: "Operations related to Program Post entities",
+    },
+    {
+      name: "Testmonial",
+      description: "Operations related to Testmonial Post entities",
+    },
+    {
+      name: "Logout",
+      description: "Operations related to Logout entities",
     },
   ],
   paths: {
@@ -167,11 +183,57 @@ const options = {
         },
       },
     },
-
+    "/api/v1/university/auth": {
+      post: {
+        tags: ["University"],
+        summary: "University Login",
+        description: "make Login With University",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        parameters: [],
+        requestBody: {
+          content: {
+            "multipart/form-data": {
+              schema: {
+                type: "object",
+                properties: {
+                  username: {
+                    type: "string",
+                    description: "username of the university",
+                    example: "Nyagatare",
+                  },
+                  password: {
+                    type: "string",
+                    description: "password of university",
+                    example: "rwanda123",
+                  },
+                },
+              },
+            },
+          },
+          required: true,
+        },
+        responses: {
+          201: {
+            description: "University Login  successfully",
+          },
+          400: {
+            description: "Bad Request",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
     "/api/v1/user/register": {
       post: {
-        tags: ["User Applicant"],
-        description: "Register a new User Applicant",
+        tags: ["Applicant"],
+        summary: "Register a new User Applicant",
+        description: "Create a new User Applicant",
         security: [
           {
             bearerAuth: [], // Add the security requirement for this endpoint
@@ -210,8 +272,9 @@ const options = {
     },
     "/api/v1/user/auth": {
       post: {
-        tags: ["User Login"],
-        description: "Try a User Login ",
+        tags: ["Applicant"],
+        summary: "Applicant Login",
+        description: "User Login ",
         security: [
           {
             bearerAuth: [], // Add the security requirement for this endpoint
@@ -247,8 +310,9 @@ const options = {
     },
     "/api/v1/user/auth/logout": {
       post: {
-        tags: ["user logout"],
+        tags: ["Logout"],
         description: "logging out a user",
+        summary: "logging out a user",
         security: [
           {
             bearerAuth: [], // Add the security requirement for this endpoint
@@ -265,6 +329,102 @@ const options = {
           },
           500: {
             description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/user/read": {
+      get: {
+        tags: ["Applicant"],
+        summary: "Get All User Applicant",
+        description: "Get all User posts",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        responses: {
+          200: {
+            description: "All User Posts retrieved successfully",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/user/read/{id}": {
+      get: {
+        tags: ["Applicant"],
+        summary: "Read User By ID",
+        description: "Get a User post by ID",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "ID of the university post",
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+          },
+        ],
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        responses: {
+          200: {
+            description: "User Post retrieved successfully",
+          },
+          404: {
+            description: "User Post not found",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/user/delete/{id}": {
+      delete: {
+        tags: ["Applicant"],
+        summary: "Delete a user post",
+        description: "Delete an existing user post by its ID.",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+            description: "Unique identifier of the user post to be deleted",
+          },
+        ],
+        responses: {
+          200: {
+            description: "user post deleted successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "Blog post not found",
+          },
+          500: {
+            description: "Internal server error",
           },
         },
       },

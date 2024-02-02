@@ -145,10 +145,6 @@ export const updateProgram = async (req, res) => {
       related,
     } = req.body;
     const { id } = req.params;
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
     const findId = await program.findById(id);
     if (!findId) {
       return res.status(404).json({
