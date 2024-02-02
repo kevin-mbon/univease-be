@@ -13,14 +13,14 @@ const programRouter = express.Router();
 
 programRouter.post(
   "/create",
-  fileUpload.single("files"),
+  fileUpload.single("programImage"),
   programValidationRules(),
   Authorization,
   createProgram
 );
 programRouter.put(
   "/update/:id",
-  fileUpload.single("files"),
+  fileUpload.single("programImage"),
   programValidationRules(),
   Authorization,
   updateProgram

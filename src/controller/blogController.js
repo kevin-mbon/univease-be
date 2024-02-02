@@ -19,7 +19,6 @@ export const createPost = async (req, res) => {
     }
     let result;
     if (req.file) result = await uploadToCloud(req.file, res);
-    console.log("ifot", result);
     const MakePost = await blog.create({
       postImage: result?.secure_url,
       postTitle,
