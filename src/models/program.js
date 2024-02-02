@@ -13,6 +13,9 @@ const programSchema = new mongoose.Schema(
     tags: {
       type: [String],
     },
+    programImage: {
+      type: String,
+    },
     tuitionAndFees: {
       registration: {
         type: String,

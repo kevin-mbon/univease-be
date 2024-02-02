@@ -1,4 +1,5 @@
 import program from "../models/program";
+import { uploadToCloud } from "../helper/cloudinary";
 import { validationResult } from "express-validator";
 export const createProgram = async (req, res) => {
   try {
@@ -25,6 +26,8 @@ export const createProgram = async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
+    let result;
+    if (req.file) result = await uploadToCloud(req.file, res);
 
     const makeProgram = await program.create({
       name,
@@ -34,6 +37,7 @@ export const createProgram = async (req, res) => {
       degree,
       degreeOverview,
       components,
+      programImage: result?.secure_url,
       programExtension: { wayTolearn, related },
     });
     return res.status(201).json({
@@ -152,6 +156,8 @@ export const updateProgram = async (req, res) => {
         message: "Program Not Found",
       });
     }
+    let result;
+    if (req.file) result = await uploadToCloud(req.file, res);
 
     await program.findByIdAndUpdate(id, {
       name,
@@ -160,6 +166,7 @@ export const updateProgram = async (req, res) => {
       tuitionAndFees: { registration, scholarship, hostel },
       degree,
       degreeOverview,
+      programImage: result?.secure_url,
       components,
       programExtension: { wayTolearn, related },
     });

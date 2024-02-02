@@ -723,6 +723,11 @@ const options = {
                     description: "Related Subject",
                     example: "tags content...",
                   },
+                  programImage: {
+                    type: "string",
+                    format: "binary",
+                    description: "Image file for the program post",
+                  },
                   registration: {
                     type: "string",
                     description: "registration fees",
@@ -920,6 +925,11 @@ const options = {
                     type: "string",
                     description: "Related Subject",
                     example: "tags content...",
+                  },
+                  programImage: {
+                    type: "string",
+                    format: "binary",
+                    description: "Image file for the program post",
                   },
                   registration: {
                     type: "string",
