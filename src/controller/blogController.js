@@ -21,6 +21,7 @@ export const createPost = async (req, res) => {
     if (req.file) result = await uploadToCloud(req.file, res);
     const MakePost = await blog.create({
       postImage: result?.secure_url,
+      campus: req.University._id,
       postTitle,
       postContent,
     });
@@ -44,7 +45,10 @@ export const createPost = async (req, res) => {
 
 export const getPost = async (req, res) => {
   try {
-    const findPost = await blog.find();
+    const findPost = await blog.find().populate({
+      path: "campus",
+      select: "universityName country city",
+    });
     if (findPost) {
       return res.status(200).json({
         status: "200",
@@ -65,7 +69,10 @@ export const getPost = async (req, res) => {
 export const getSinglePost = async (req, res) => {
   try {
     const { id } = req.params;
-    const findPost = await blog.findById(id);
+    const findPost = await blog.findById(id).populate({
+      path: "campus",
+      select: "universityName country city",
+    });
     if (findPost) {
       return res.status(200).json({
         status: "200",
@@ -131,6 +138,7 @@ export const updatePost = async (req, res) => {
     if (req.file) result = await uploadToCloud(req.file, res);
     await blog.findByIdAndUpdate(id, {
       postImage: result?.secure_url,
+      campus: req.University._id,
       postTitle,
       postContent,
     });
