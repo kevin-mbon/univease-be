@@ -13,6 +13,11 @@ const blogSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    campus: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "University",
+      required: true,
+    },
   },
   { timestamps: true }
 );
