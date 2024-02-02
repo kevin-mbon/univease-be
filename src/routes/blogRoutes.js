@@ -21,5 +21,10 @@ blogRouter.post(
 blogRouter.get("/read", getPost);
 blogRouter.get("/read/:id", getSinglePost);
 blogRouter.delete("/delete/:id", Authorization, deletePost);
-blogRouter.put("/update/:id", Authorization, updatePost);
+blogRouter.put(
+  "/update/:id",
+  fileUpload.single("postImage"),
+  Authorization,
+  updatePost
+);
 export default blogRouter;
