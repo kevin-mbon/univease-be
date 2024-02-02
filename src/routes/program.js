@@ -22,7 +22,6 @@ programRouter.post(
 programRouter.put(
   "/update/:id",
   fileUpload.single("programImage"),
-  programValidationRules(),
   Authorization,
   updateProgram
 );
