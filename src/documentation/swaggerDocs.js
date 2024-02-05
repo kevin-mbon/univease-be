@@ -388,6 +388,41 @@ const options = {
         },
       },
     },
+    "/api/v1/user/update/{id}": {
+      put: {
+        tags: ["Applicant"],
+        summary: "Update applicant By ID",
+        description: "to update a user by id",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "ID of the university post",
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+          },
+        ],
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        responses: {
+          200: {
+            description: "Applicant updated successfully",
+          },
+          404: {
+            description: "Applicant not found",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
     "/api/v1/user/delete/{id}": {
       delete: {
         tags: ["Applicant"],

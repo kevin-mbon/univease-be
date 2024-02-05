@@ -4,6 +4,7 @@ import University from "../models/UniversityModel.js";
 import { uploadToCloud } from "../helper/cloudinary.js";
 import bcrypt from "bcrypt";
 import { sendMail } from "../helper/nodeMailer.js";
+
 // Controller to register a university
 export const registerUniversity = async (req, res) => {
   try {
