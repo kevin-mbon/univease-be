@@ -109,16 +109,16 @@ export const getUniProgramPosts = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const blogPosts = await blog.find({ campus: id }).populate({
+    const ProgramPosts = await program.find({ campus: id }).populate({
       path: "campus",
       select: "universityName country city",
     });
 
-    if (blogPosts.length > 0) {
+    if (ProgramPosts.length > 0) {
       return res.status(200).json({
         status: "200",
         message: "Program Posts Retrieved Successfully",
-        data: blogPosts,
+        data: ProgramPosts,
       });
     } else {
       return res.status(404).json({
