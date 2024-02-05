@@ -501,6 +501,41 @@ const options = {
         },
       },
     },
+    "/api/v1/blog/{id}": {
+      get: {
+        tags: ["Blog"],
+        summary: "Read Blog By ID According to their University",
+        description: "Get a blog post by ID",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "ID of the University",
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+          },
+        ],
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        responses: {
+          200: {
+            description: "Blog Post retrieved successfully",
+          },
+          404: {
+            description: "Blog Post not found",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
     "/api/v1/blog/read/{id}": {
       get: {
         tags: ["Blog"],
@@ -961,6 +996,42 @@ const options = {
         responses: {
           200: {
             description: "All program Posts retrieved successfully",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/program/{id}": {
+      get: {
+        tags: ["Program"],
+        summary:
+          "Read program By ID According To Their Coresponding Universsity",
+        description: "Get a program post by ID",
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "ID of the University",
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+          },
+        ],
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        responses: {
+          200: {
+            description: "program Post retrieved successfully",
+          },
+          404: {
+            description: "program Post not found",
           },
           500: {
             description: "Internal Server Error",

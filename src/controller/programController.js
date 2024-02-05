@@ -105,6 +105,35 @@ export const getOneProgram = async (req, res) => {
     });
   }
 };
+export const getUniProgramPosts = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const blogPosts = await blog.find({ campus: id }).populate({
+      path: "campus",
+      select: "universityName country city",
+    });
+
+    if (blogPosts.length > 0) {
+      return res.status(200).json({
+        status: "200",
+        message: "Program Posts Retrieved Successfully",
+        data: blogPosts,
+      });
+    } else {
+      return res.status(404).json({
+        status: "404",
+        message: "No Program Posts Found for the Given University ID",
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      status: "500",
+      message: "Failed To Retrieve Program Posts",
+      error: error.message,
+    });
+  }
+};
 export const deleteProgram = async (req, res) => {
   try {
     const { id } = req.params;
