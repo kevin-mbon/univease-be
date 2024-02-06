@@ -204,7 +204,7 @@ export const updateUniversity = async (req, res) => {
 
     return res.status(200).json({
       message: "University updated successfully",
-      applicant: existingUniversity,
+      university: existingUniversity,
     });
   } catch (error) {
     console.log(error);
