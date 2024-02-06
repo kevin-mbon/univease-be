@@ -4,6 +4,7 @@ import {
   registerUniversity,
   getUniversityById,
   deleteUniversity,
+  
 } from "../controller/universityController.js";
 import fileUpload from "../helper/multer.js";
 import { loginUniversity } from "../controller/authController.js";
