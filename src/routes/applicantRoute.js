@@ -10,9 +10,11 @@ import {
   getApplicant,
   getOneApplicant,
   registerApplicant,
+  updateApplicant
 } from "../controller/applicantController.js";
 import fileUpload from "../helper/multer.js";
 import { loginValidationRules } from "../service/authValidation.js";
+import Authorization from "../middleware/ApplicantMiddleWare.js";
 const applicantRouter = express.Router();
 
 const registrationValidationRules = [
@@ -54,6 +56,7 @@ applicantRouter.post(
 applicantRouter.post("/auth/logout", authMiddleware,logoutApplicant);
 applicantRouter.get("/read", getApplicant);
 applicantRouter.get("/read/:id", getOneApplicant);
+applicantRouter.put("/update/:id", updateApplicant);
 applicantRouter.delete("/delete/:id", deleteApplicant);
 
 export default applicantRouter;

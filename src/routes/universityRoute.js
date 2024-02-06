@@ -4,10 +4,12 @@ import {
   registerUniversity,
   getUniversityById,
   deleteUniversity,
+  updateUniversity,
   
 } from "../controller/universityController.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 import fileUpload from "../helper/multer.js";
-import { loginUniversity } from "../controller/authController.js";
+import { loginUniversity, logoutUniversity } from "../controller/authController.js";
 import { registrationValidationRules } from "../service/Validation.js";
 import { universityloginValidationRules } from "../service/authValidation.js";
 
@@ -30,5 +32,6 @@ univRouter.post(
 univRouter.get("/read", getAllUniversities);
 univRouter.get("/read/:id", getUniversityById);
 univRouter.delete("/delete/:id", deleteUniversity);
-
+univRouter.post("/auth/logout",authMiddleware, logoutUniversity);
+univRouter.put("/update/:id", updateUniversity);
 export default univRouter;

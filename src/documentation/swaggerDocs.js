@@ -61,6 +61,7 @@ const options = {
               example: {
                 universityName: "kepls",
                 email: "kepla@gmail.com",
+                username: "kepla",
                 country: "Rwanda",
                 city: "Kigali",
                 universityType: "public",
@@ -134,6 +135,57 @@ const options = {
           },
           404: {
             description: "University Post not found",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/university/update/{id}": {
+      put: {
+        tags: ["University"],
+        description: "Update an existing University",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "ID of the university post",
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+          },
+        ],
+        requestBody: {
+          content: {
+            "application/json": {
+              example: {
+                universityName: "kepls",
+                email: "kepla@gmail.com",
+                username: "kepla",
+                country: "Rwanda",
+                city: "Kigali",
+                universityType: "public",
+                password: "1234qw",
+                confirmPassword: "1234qw",
+              },
+            },
+          },
+          required: true,
+        },
+        responses: {
+          201: {
+            description: "New University was created successfully",
+          },
+          400: {
+            description: "Bad Request",
           },
           500: {
             description: "Internal Server Error",
@@ -222,6 +274,31 @@ const options = {
           },
           400: {
             description: "Bad Request",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/university/auth/logout": {
+      post: {
+        tags: ["Logout"],
+        description: "logging out a university",
+        summary: "logging out a university",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        parameters: [],
+        required: true,
+        responses: {
+          200: {
+            description: "University successfully logged out",
+          },
+          401: {
+            description: "Unauthorized: User not logged in",
           },
           500: {
             description: "Internal Server Error",
@@ -381,6 +458,58 @@ const options = {
           },
           404: {
             description: "User Post not found",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/user/update/{id}": {
+      put: {
+        tags: ["Applicant"],
+        summary: "Update an existing User Applicant",
+        description: "Update User Applicant",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "ID of the applicant",
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+          },
+        ],
+        requestBody: {
+          content: {
+            "application/json": {
+              example: {
+                firstName: "Amani",
+                secondName: "Kalisa",
+                email: "kalisa@gmail.com",
+                workExperience: "",
+                contactInformation: "",
+                highSchoolOrUniversity: "",
+                password: "1234qw",
+                confirmPassword: "1234qw",
+              },
+            },
+          },
+          required: true,
+        },
+        responses: {
+          200: {
+            description: "User Applicant was updated successfully",
+          },
+          400: {
+            description: "Bad Request",
           },
           500: {
             description: "Internal Server Error",

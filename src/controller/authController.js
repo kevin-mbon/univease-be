@@ -99,7 +99,6 @@ export const logoutApplicant = async (req, res) => {
 
   // Add the token to the blacklist
   if (token) {
-    console.log(token);
     await BlacklistedToken.create({ token });
   }
 
@@ -110,4 +109,23 @@ export const logoutApplicant = async (req, res) => {
     res.clearCookie('connect.sid');
     res.json({ message: 'Logged out successfully.' });
   
-})}
+})};
+
+export const logoutUniversity = async (req, res) => {
+  const authHeader = req.headers.authorization;
+  const token = authHeader.split(' ')[1];
+
+  // Add the token to the blacklist
+  if (token) {
+    console.log(token);
+    await BlacklistedToken.create({ token });
+  }
+
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error while logging out.' });
+    }
+    res.clearCookie('connect.sid');
+    res.json({ message: 'Logged out successfully.' });
+  });
+}
