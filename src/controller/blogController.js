@@ -93,6 +93,37 @@ export const getSinglePost = async (req, res) => {
     });
   }
 };
+// getBlog University
+
+export const getUniBlogPosts = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const blogPosts = await blog.find({ campus: id }).populate({
+      path: "campus",
+      select: "universityName country city",
+    });
+
+    if (blogPosts.length > 0) {
+      return res.status(200).json({
+        status: "200",
+        message: "Blog Posts Retrieved Successfully",
+        data: blogPosts,
+      });
+    } else {
+      return res.status(404).json({
+        status: "404",
+        message: "No Blog Posts Found for the Given University ID",
+      });
+    }
+  } catch (error) {
+    return res.status(500).json({
+      status: "500",
+      message: "Failed To Retrieve Blog Posts",
+      error: error.message,
+    });
+  }
+};
 
 // delete Post
 

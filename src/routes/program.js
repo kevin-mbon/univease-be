@@ -5,6 +5,7 @@ import {
   deleteProgram,
   getOneProgram,
   getProgram,
+  getUniProgramPosts,
   updateProgram,
 } from "../controller/programController";
 import { programValidationRules } from "../service/Validation";
@@ -28,6 +29,7 @@ programRouter.put(
 
 programRouter.get("/read", getProgram);
 programRouter.get("/read/:id", getOneProgram);
+programRouter.get("/:id", getUniProgramPosts);
 programRouter.delete("/delete/:id", Authorization, deleteProgram);
 
 export default programRouter;

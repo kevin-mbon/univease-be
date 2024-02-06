@@ -7,6 +7,7 @@ import {
   deletePost,
   getPost,
   getSinglePost,
+  getUniBlogPosts,
   updatePost,
 } from "../controller/blogController";
 const blogRouter = expres.Router();
@@ -20,6 +21,7 @@ blogRouter.post(
 );
 blogRouter.get("/read", getPost);
 blogRouter.get("/read/:id", getSinglePost);
+blogRouter.get("/:id", getUniBlogPosts);
 blogRouter.delete("/delete/:id", Authorization, deletePost);
 blogRouter.put(
   "/update/:id",
