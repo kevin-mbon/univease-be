@@ -61,6 +61,7 @@ const options = {
               example: {
                 universityName: "kepls",
                 email: "kepla@gmail.com",
+                username: "kepla",
                 country: "Rwanda",
                 city: "Kigali",
                 universityType: "public",
@@ -134,6 +135,57 @@ const options = {
           },
           404: {
             description: "University Post not found",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/university/update/{id}": {
+      put: {
+        tags: ["University"],
+        description: "Update an existing University",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            description: "ID of the university post",
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+          },
+        ],
+        requestBody: {
+          content: {
+            "application/json": {
+              example: {
+                universityName: "kepls",
+                email: "kepla@gmail.com",
+                username: "kepla",
+                country: "Rwanda",
+                city: "Kigali",
+                universityType: "public",
+                password: "1234qw",
+                confirmPassword: "1234qw",
+              },
+            },
+          },
+          required: true,
+        },
+        responses: {
+          201: {
+            description: "New University was created successfully",
+          },
+          400: {
+            description: "Bad Request",
           },
           500: {
             description: "Internal Server Error",

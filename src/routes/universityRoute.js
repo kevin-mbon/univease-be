@@ -4,6 +4,7 @@ import {
   registerUniversity,
   getUniversityById,
   deleteUniversity,
+  updateUniversity,
   
 } from "../controller/universityController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
@@ -32,4 +33,5 @@ univRouter.get("/read", getAllUniversities);
 univRouter.get("/read/:id", getUniversityById);
 univRouter.delete("/delete/:id", deleteUniversity);
 univRouter.post("/auth/logout",authMiddleware, logoutUniversity);
+univRouter.put("/update/:id", updateUniversity);
 export default univRouter;
