@@ -105,6 +105,7 @@ export const getOneProgram = async (req, res) => {
     });
   }
 };
+// getProgram posted by University
 export const getUniProgramPosts = async (req, res) => {
   try {
     const { id } = req.params;
@@ -134,6 +135,7 @@ export const getUniProgramPosts = async (req, res) => {
     });
   }
 };
+// delete Program
 export const deleteProgram = async (req, res) => {
   try {
     const { id } = req.params;
@@ -158,7 +160,7 @@ export const deleteProgram = async (req, res) => {
     });
   }
 };
-
+// update program
 export const updateProgram = async (req, res) => {
   try {
     const {
