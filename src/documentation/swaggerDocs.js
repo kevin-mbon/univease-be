@@ -229,6 +229,31 @@ const options = {
         },
       },
     },
+    "/api/v1/university/auth/logout": {
+      post: {
+        tags: ["Logout"],
+        description: "logging out a university",
+        summary: "logging out a university",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        parameters: [],
+        required: true,
+        responses: {
+          200: {
+            description: "University successfully logged out",
+          },
+          401: {
+            description: "Unauthorized: User not logged in",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
     "/api/v1/user/register": {
       post: {
         tags: ["Applicant"],
@@ -391,31 +416,48 @@ const options = {
     "/api/v1/user/update/{id}": {
       put: {
         tags: ["Applicant"],
-        summary: "Update applicant By ID",
-        description: "to update a user by id",
+        summary: "Update an existing User Applicant",
+        description: "Update User Applicant",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
         parameters: [
           {
             name: "id",
             in: "path",
             required: true,
-            description: "ID of the university post",
+            description: "ID of the applicant",
             schema: {
               type: "string",
               pattern: "^[0-9a-fA-F]{24}$",
             },
           },
         ],
-        security: [
-          {
-            bearerAuth: [], // Add the security requirement for this endpoint
+        requestBody: {
+          content: {
+            "application/json": {
+              example: {
+                firstName: "Amani",
+                secondName: "Kalisa",
+                email: "kalisa@gmail.com",
+                workExperience: "",
+                contactInformation: "",
+                highSchoolOrUniversity: "",
+                password: "1234qw",
+                confirmPassword: "1234qw",
+              },
+            },
           },
-        ],
+          required: true,
+        },
         responses: {
           200: {
-            description: "Applicant updated successfully",
+            description: "User Applicant was updated successfully",
           },
-          404: {
-            description: "Applicant not found",
+          400: {
+            description: "Bad Request",
           },
           500: {
             description: "Internal Server Error",
