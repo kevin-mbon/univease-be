@@ -37,7 +37,7 @@ export const loginApplicant = async (req, res) => {
 
     // Generate a token for the logged-in user
     const token = generateToken(userLogin._id);
-    
+
     return res.status(200).json({
       message: "Applicant logged in successfully",
       data: userLogin,
@@ -93,9 +93,8 @@ export const loginUniversity = async (req, res) => {
   }
 };
 export const logoutApplicant = async (req, res) => {
-  
   const authHeader = req.headers.authorization;
-  const token = authHeader.split(' ')[1];
+  const token = authHeader.split(" ")[1];
 
   // Add the token to the blacklist
   if (token) {
@@ -104,16 +103,16 @@ export const logoutApplicant = async (req, res) => {
 
   req.session.destroy((err) => {
     if (err) {
-      return res.status(500).json({ message: 'Error while logging out.' });
+      return res.status(500).json({ message: "Error while logging out." });
     }
-    res.clearCookie('connect.sid');
-    res.json({ message: 'Logged out successfully.' });
-  
-})};
+    res.clearCookie("connect.sid");
+    res.json({ message: "Logged out successfully." });
+  });
+};
 
 export const logoutUniversity = async (req, res) => {
   const authHeader = req.headers.authorization;
-  const token = authHeader.split(' ')[1];
+  const token = authHeader.split(" ")[1];
 
   // Add the token to the blacklist
   if (token) {
@@ -123,9 +122,28 @@ export const logoutUniversity = async (req, res) => {
 
   req.session.destroy((err) => {
     if (err) {
-      return res.status(500).json({ message: 'Error while logging out.' });
+      return res.status(500).json({ message: "Error while logging out." });
     }
-    res.clearCookie('connect.sid');
-    res.json({ message: 'Logged out successfully.' });
+    res.clearCookie("connect.sid");
+    res.json({ message: "Logged out successfully." });
   });
-}
+};
+// university changing status endpoint
+export const changeStatus = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const existingUniversity = await University.findById(id);
+    if (!existingUniversity) {
+      return res.status(404).json({ message: "University not found" });
+    }
+
+    const university =
+      existingUniversity.status != "Approved"
+        ? await University.findByIdAndUpdate(id, { status: "Approved" })
+        : await University.findByIdAndUpdate(id, { status: "cancelled" });
+    res.json({ message: "Status changed successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Failed to change status", error });
+  }
+};

@@ -68,6 +68,10 @@ const universitySchema = new mongoose.Schema(
     verificationProcess: {
       type: String,
     },
+    status:{
+      type: String,
+      default: "pending"
+    },
   },
   { timestamps: true }
 );

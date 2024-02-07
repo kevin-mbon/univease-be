@@ -43,6 +43,10 @@ const options = {
       name: "Logout",
       description: "Operations related to Logout entities",
     },
+    {
+      name: "Admin",
+      description: "Admin Operations",
+    },
   ],
   paths: {
     "/api/v1/university/register": {
@@ -1349,6 +1353,47 @@ const options = {
           },
           404: {
             description: "Not found",
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+    },
+    "/api/v1/admin/assign-status/{id}": {
+      post: {
+        tags: ["Admin"],
+        summary: "To change the status of the university",
+        description: "status",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+            description: "status",
+          },
+        ],
+        responses: {
+          200: {
+            description: " successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "university not found",
           },
           500: {
             description: "Internal server error",
