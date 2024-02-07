@@ -39,7 +39,7 @@ const programSchema = new mongoose.Schema(
     },
     programExtension: {
       wayTolearn: {
-        type: String,
+        type: [String],
       },
       related: {
         type: [String],
