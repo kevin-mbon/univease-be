@@ -47,6 +47,10 @@ const options = {
       name: "Admin",
       description: "Admin Operations",
     },
+    {
+      name: "Application",
+      description: "Application Operations",
+    }
   ],
   paths: {
     "/api/v1/university/register": {
@@ -1397,6 +1401,62 @@ const options = {
           },
           500: {
             description: "Internal server error",
+          },
+        },
+      },
+      "/api/v1/application/apply": {
+        post: {
+          tags: ["application"],
+          summary: "apply to program",
+          description: "apply to program",
+          security: [
+            {
+              bearerAuth: [], // Add the security requirement for this endpoint
+            },
+          ],
+          parameters: [],
+          requestBody: {
+            content: {
+              "multipart/form-data": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    postTitle: {
+                      type: "string",
+                      description: "",
+                      example: "",
+                    },
+                    time:{
+                      type: "Date",
+                      description: "",
+                      example: "",
+                    },
+                    postContent: {
+                      type: "string",
+                      description: "Content of the blog post",
+                      example: "Sample content...",
+                    },
+                    coverLetter: {
+                      type: "string",
+                      format: "binary",
+                      description: "cover letter of your application",
+                    },
+                  },
+                },
+              },
+            },
+            required: true,
+          },
+          responses: {
+            201: {
+              description: "New Blog Post created successfully",
+            },
+            400: {
+              description: "Bad Request",
+            },
+            500: {
+              description: "Internal Server Error",
+            },
           },
         },
       },
