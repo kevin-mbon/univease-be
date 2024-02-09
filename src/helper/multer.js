@@ -13,7 +13,12 @@ const fileUpload = multer({
       ext !== ".tif" &&
       ext !== ".webp" &&
       ext !== ".bmp" &&
-      ext !== ".tiff"
+      ext !== ".tiff" &&
+      ext !== ".pdf" &&
+      ext !== ".doc" &&
+      ext !== ".docx" &&
+      ext !== ".xls"&&
+      ext !== ".zip"
     ) {
       return cb(new Error("Invalid file type"), false);
     }

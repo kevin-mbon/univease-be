@@ -6,7 +6,7 @@ import blogRouter from "./blogRoutes.js";
 import testmonialRouter from "./testimonial.js";
 import programRouter from "./program.js";
 import adminRouter from "./admin.js";
-import applicantRouter from "./applicantRoute.js";
+import applicationRouter from "./application.js";
 const router = express.Router();
 
 router.use("/university", univRouter);
@@ -16,6 +16,6 @@ router.use("/blog", blogRouter);
 router.use("/testmonial", testmonialRouter);
 router.use("/program", programRouter);
 router.use("/admin", adminRouter);
-router.use("/applications", applicantRouter);
+router.use("/applications", applicationRouter);
 
 export default router;

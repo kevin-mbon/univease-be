@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
  const applicationSchema = new mongoose.Schema({
     program: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Program",
-        required: true,
+        ref: "program",
+        required: false,
       },
     name:{
         type: String,
