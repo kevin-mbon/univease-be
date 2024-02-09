@@ -50,7 +50,7 @@ const options = {
     {
       name: "Application",
       description: "Application Operations",
-    }
+    },
   ],
   paths: {
     "/api/v1/university/register": {
@@ -1433,30 +1433,20 @@ const options = {
               schema: {
                 type: "object",
                 properties: {
-                  // name: {
-                  //   type: "string",
-                  //   description: "",
-                  //   example: "",
-                  // },
-                  time:{
-                    type: "Date",
-                    description: "",
+                  startingDate: {
+                    type: "String",
+                    description: "Choose In take to start ",
                     example: "",
                   },
-                  // email: {
-                  //   type: "string",
-                  //   description: "Content of the blog post",
-                  //   example: "Sample content...",
-                  // },
+
                   coverLetter: {
                     type: "string",
-                    format: "binary",
-                    description: "cover letter of your application use PDF",
+                    description: "cover letter of your application ",
                   },
                   attachment: {
                     type: "string",
                     format: "binary",
-                    description: "cover letter of your application",
+                    description: "cover letter of your application use PDF",
                   },
                 },
               },
