@@ -10,7 +10,7 @@ export const applicationForm = async (req, res) => {
     }
     const { name, email, phoneNumber, time, coverLetter, attachement } =
       req.body;
-    const { program } = req.params;
+    const { id } = req.params;
     let result;
     if (req.file) result = await uploadToCloud(req.file, res);
     const form = await Application.create({
@@ -20,7 +20,7 @@ export const applicationForm = async (req, res) => {
       name,
       email,
       phoneNumber,
-      program,
+      program: id,
     });
     if (form) {
       return res.status(200).json({

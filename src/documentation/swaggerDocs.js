@@ -1451,7 +1451,7 @@ const options = {
                   coverLetter: {
                     type: "string",
                     format: "binary",
-                    description: "cover letter of your application",
+                    description: "cover letter of your application use PDF",
                   },
                   attachment: {
                     type: "string",
@@ -1507,7 +1507,7 @@ const options = {
         },
       },
     },
-    "/api/v1/applications/oneProgram/{id}": {
+    "/api/v1/applications/oneProgram/{program}": {
       get: {
         tags: ["Application"],
         summary: "to retrieve all application of one program",

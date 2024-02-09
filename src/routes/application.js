@@ -15,7 +15,7 @@ applicationRouter.post(
   applicationForm
 );
 applicationRouter.get("/all", getApplication);
-applicationRouter.get("/oneProgram/:id", getOneApplication);
+applicationRouter.get("/oneProgram/:program", getOneApplication);
 applicationRouter.get("/one/:id", getOneApplicationById);
 
 export default applicationRouter;
