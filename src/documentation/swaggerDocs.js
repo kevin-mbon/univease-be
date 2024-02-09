@@ -47,6 +47,10 @@ const options = {
       name: "Admin",
       description: "Admin Operations",
     },
+    {
+      name: "Application",
+      description: "Application Operations",
+    }
   ],
   paths: {
     "/api/v1/university/register": {
@@ -1394,6 +1398,190 @@ const options = {
           },
           404: {
             description: "university not found",
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+    },
+    "/api/v1/applications/apply/{id}": {
+      post: {
+        tags: ["Application"],
+        summary: "apply to program",
+        description: "apply to program",
+        security: [
+          {
+            bearerAuth: [], // Add the security requirement for this endpoint
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+            description: "program id",
+          },
+        ],
+        requestBody: {
+          content: {
+            "multipart/form-data": {
+              schema: {
+                type: "object",
+                properties: {
+                  // name: {
+                  //   type: "string",
+                  //   description: "",
+                  //   example: "",
+                  // },
+                  time:{
+                    type: "Date",
+                    description: "",
+                    example: "",
+                  },
+                  // email: {
+                  //   type: "string",
+                  //   description: "Content of the blog post",
+                  //   example: "Sample content...",
+                  // },
+                  coverLetter: {
+                    type: "string",
+                    format: "binary",
+                    description: "cover letter of your application use PDF",
+                  },
+                  attachment: {
+                    type: "string",
+                    format: "binary",
+                    description: "cover letter of your application",
+                  },
+                },
+              },
+            },
+          },
+          required: true,
+        },
+        responses: {
+          201: {
+            description: "application created successfully",
+          },
+          400: {
+            description: "Bad Request",
+          },
+          500: {
+            description: "Internal Server Error",
+          },
+        },
+      },
+    },
+    "/api/v1/applications/all": {
+      get: {
+        tags: ["Application"],
+        summary: "All application",
+        description: "all application",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [],
+        responses: {
+          200: {
+            description: " successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "not found",
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+    },
+    "/api/v1/applications/oneProgram/{program}": {
+      get: {
+        tags: ["Application"],
+        summary: "to retrieve all application of one program",
+        description: "all program application",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+            description: "program id",
+          },
+        ],
+        responses: {
+          200: {
+            description: " successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "not found",
+          },
+          500: {
+            description: "Internal server error",
+          },
+        },
+      },
+    },
+    "/api/v1/applications/one/{id}": {
+      get: {
+        tags: ["Application"],
+        summary: "to retrieve application by id",
+        description: "application",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: {
+              type: "string",
+              pattern: "^[0-9a-fA-F]{24}$",
+            },
+            description: "application id",
+          },
+        ],
+        responses: {
+          200: {
+            description: " successfully",
+          },
+          400: {
+            description: "Bad request",
+          },
+          401: {
+            description: "Unauthorized",
+          },
+          404: {
+            description: "not found",
           },
           500: {
             description: "Internal server error",
