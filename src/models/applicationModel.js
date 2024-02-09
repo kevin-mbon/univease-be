@@ -1,29 +1,28 @@
-import mongoose from 'mongoose';
- const applicationSchema = new mongoose.Schema({
+import mongoose from "mongoose";
+const applicationSchema = new mongoose.Schema(
+  {
     program: {
-        type: String,
-      },
-    name:{
-        type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Program",
+      require: true,
     },
-    email: {
-        type: String,
+    applicant: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Applicant",
+      require: true,
     },
-    phoneNumber:{
-        type: Number,
+    startingDate: {
+      type: String,
     },
-    time:{
-       type: Date,
+    coverLetter: {
+      type: String,
     },
-    coverLetter:{
-        type: String,
+    attachement: {
+      type: String,
     },
-    attachement:{   
-        type: String,
-    },
- },
- { timestamps: true }
- );
+  },
+  { timestamps: true }
+);
 
-const Application = mongoose.model('Application', applicationSchema);
+const Application = mongoose.model("Application", applicationSchema);
 export default Application;

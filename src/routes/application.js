@@ -1,4 +1,5 @@
 import express from "express";
+import Authorization from "../middleware/ApplicantMiddleWare";
 import {
   applicationForm,
   getApplication,
@@ -11,7 +12,8 @@ const applicationRouter = express.Router();
 
 applicationRouter.post(
   "/apply/:id",
-  fileUpload.single("coverLetter"),
+  fileUpload.single("attachment"),
+  Authorization,
   applicationForm
 );
 applicationRouter.get("/all", getApplication);
