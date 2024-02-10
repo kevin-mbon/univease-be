@@ -56,6 +56,13 @@ const universitySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    program: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Program",
+        require: false,
+      },
+    ],
     password: {
       type: String,
       required: false,
@@ -68,9 +75,9 @@ const universitySchema = new mongoose.Schema(
     verificationProcess: {
       type: String,
     },
-    status:{
+    status: {
       type: String,
-      default: "pending"
+      default: "pending",
     },
   },
   { timestamps: true }

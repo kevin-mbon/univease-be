@@ -1,4 +1,5 @@
 import program from "../models/program";
+import University from "../models/UniversityModel";
 import { uploadToCloud } from "../helper/cloudinary";
 import { validationResult } from "express-validator";
 export const createProgram = async (req, res) => {
@@ -15,6 +16,8 @@ export const createProgram = async (req, res) => {
       wayTolearn,
       related,
     } = req.body;
+
+  
     const existingName = await program.findOne({
       name,
     });
@@ -40,6 +43,11 @@ export const createProgram = async (req, res) => {
       programImage: result?.secure_url,
       programExtension: { wayTolearn, related },
     });
+
+    await University.findByIdAndUpdate(
+      { _id: req.University._id },
+      { $push: { program: makeProgram._id } }
+    );
     return res.status(201).json({
       status: "201",
       message: "Program Created Well",
