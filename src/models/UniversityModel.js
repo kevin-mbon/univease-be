@@ -6,6 +6,12 @@ const universitySchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    mission: {
+      type: String,
+    },
+    vision: {
+      type: String,
+    },
     country: { type: String, required: false },
     city: { type: String, required: false },
     phoneNumbers: { type: Number, required: false },
