@@ -37,7 +37,9 @@ export const registerUniversity = async (req, res) => {
     }
 
     const existingUniversity = await University.findOne({
-      universityName,username,email,
+      universityName,
+      username,
+      email,
     });
 
     if (existingUniversity) {
@@ -102,7 +104,9 @@ export const registerUniversity = async (req, res) => {
 // Controller to get all universities
 export const getAllUniversities = async (req, res) => {
   try {
-    const universities = await University.find();
+    const universities = await University.find().populate({
+      path: "program",
+    });
     res.status(200).json({ success: true, data: universities });
   } catch (error) {
     console.log(error);
@@ -114,7 +118,9 @@ export const getAllUniversities = async (req, res) => {
 export const getUniversityById = async (req, res) => {
   const { id } = req.params;
   try {
-    const university = await University.findById(id);
+    const university = await University.findById(id).populate({
+      path: "program",
+    });
     res.status(200).json({ success: true, data: university });
   } catch (error) {
     console.log(error);
@@ -158,7 +164,7 @@ export const updateUniversity = async (req, res) => {
     if (!existingUniversity) {
       return res.status(404).json({ message: "University not found" });
     }
-    
+
     let result;
     if (req.file) result = await uploadToCloud(req.file, res);
     const salt = await bcrypt.genSalt(10);
@@ -172,7 +178,7 @@ export const updateUniversity = async (req, res) => {
     existingUniversity.city = city;
     existingUniversity.username = username;
     existingUniversity.socialMediaLinks = socialMediaLinks;
-    existingUniversity.country= country;
+    existingUniversity.country = country;
     existingUniversity.verificationProcess = verificationProcess;
     existingUniversity.admissionsContact.name = name;
     existingUniversity.admissionsContact.contactDetails = contactDetails;
@@ -215,7 +221,6 @@ export const updateUniversity = async (req, res) => {
     });
   }
 };
-
 
 // Controller to delete a university
 export const deleteUniversity = async (req, res) => {
