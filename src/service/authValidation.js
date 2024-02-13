@@ -12,7 +12,7 @@ export const loginValidationRules = () => {
 
 export const universityloginValidationRules = () => {
   return [
-    check("username").not().isEmpty().withMessage("Username Required"),
+    check("email").not().isEmpty().withMessage("E-mail is Required"),
     check("password").notEmpty().withMessage("Password is required"),
   ];
 };
