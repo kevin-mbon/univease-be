@@ -58,9 +58,9 @@ export const loginUniversity = async (req, res) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    const userLogin = await University.findOne({ username });
+    const userLogin = await University.findOne({ email });
 
     if (!userLogin) {
       return res.status(422).json({

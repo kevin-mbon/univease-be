@@ -260,10 +260,10 @@ const options = {
               schema: {
                 type: "object",
                 properties: {
-                  username: {
+                  email: {
                     type: "string",
-                    description: "username of the university",
-                    example: "Nyagatare",
+                    description: "E-mail of the university",
+                    example: "Nyagatare@gmail.com",
                   },
                   password: {
                     type: "string",
