@@ -86,7 +86,7 @@ export const registerApplicant = async (req, res) => {
 `,
     };
     sendMail(emailTemplate);
-    
+
     // Generate a token for the registered university
     const token = generateToken(applicant.id);
     return res.status(200).json({
@@ -248,12 +248,14 @@ export const updateApplicant = async (req, res) => {
     existingApplicant.password = hashedPass;
     existingApplicant.gender = gender;
     existingApplicant.dateOfBirth = dateOfBirth;
-    existingApplicant.educationalBackground.highSchoolOrUniversity = highSchoolOrUniversity;
+    existingApplicant.educationalBackground.highSchoolOrUniversity =
+      highSchoolOrUniversity;
     existingApplicant.educationalBackground.graduationYear = graduationYear;
     existingApplicant.educationalBackground.gpaOrGrades = gpaOrGrades;
     existingApplicant.workExperience = workExperience;
     existingApplicant.lettersOfRecommendation.uploadOption = uploadOption;
-    existingApplicant.lettersOfRecommendation.contactInformation = contactInformation;
+    existingApplicant.lettersOfRecommendation.contactInformation =
+      contactInformation;
     existingApplicant.personalStatement = personalStatement;
     existingApplicant.resume = resume;
     existingApplicant.portfolio = portfolio;
@@ -293,4 +295,3 @@ export const updateApplicant = async (req, res) => {
     });
   }
 };
-
