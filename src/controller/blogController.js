@@ -56,7 +56,7 @@ export const getPost = async (req, res) => {
         data: findPost,
       });
     }
-  } catch (error) {
+  } catch (error) { 
     return res.status(500).json({
       status: "500",
       message: "Failed To Create Blog",
