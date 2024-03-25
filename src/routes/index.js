@@ -7,7 +7,7 @@ import testmonialRouter from "./testimonial.js";
 import programRouter from "./program.js";
 import adminRouter from "./admin.js";
 import applicationRouter from "./application.js";
-const router = express.Router();
+const  router = express.Router();
 
 router.use("/university", univRouter);
 router.use("/docs", docrouter);
